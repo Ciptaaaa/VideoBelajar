@@ -3,6 +3,7 @@ import PasswordLogo from "../assets/logo password.svg";
 import PasswordLogoOpen from "../assets/logo-password-open.svg";
 import NavbarLogo from "../assets/logo.png";
 import AvatarLogo from "../assets/Avatar.png";
+import { Link } from "react-router-dom";
 
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -15,15 +16,14 @@ const Login = () => {
     <>
       <header class="bg-white shadow-sm">
         <div class="container mx-auto max-w-[1200px] px-4 md:px-6 lg:px-10 py-4 flex justify-between items-center">
-          <a href="/login" class="block">
+          <Link to="/login" class="block">
             <img src={NavbarLogo} alt="Logo Video Belajar" class="h-6 md:h-8" />
-          </a>
+          </Link>
 
           <nav class="flex items-center space-x-2">
-            {/* <span class="text-gray-800 text-lg mr-2">Kategori</span> */}
-            <a href="#">
+            <Link to="#">
               <img src={AvatarLogo} alt="Profil" class="h-10 w-10" />
-            </a>
+            </Link>
           </nav>
         </div>
       </header>
@@ -89,12 +89,12 @@ const Login = () => {
                   </button>
                 </div>
                 <div className="text-right my-4">
-                  <a
-                    href="/Forgot-Password"
+                  <Link
+                    to="/Forgot-Password"
                     className="text-sm text-gray-500 hover:text-gray-700"
                   >
                     Lupa Password?
-                  </a>
+                  </Link>
                 </div>
               </div>
               <div className="flex items-center justify-between mb-6">
@@ -106,12 +106,12 @@ const Login = () => {
                 </button>
               </div>
               <div className="flex items-center justify-center mb-4">
-                <a
-                  href="/Register"
+                <Link
+                  to="/Register"
                   className="w-full bg-green-100 hover:bg-green-200 text-green-700 font-semibold py-2 px-4 rounded-md text-center"
                 >
                   Daftar
-                </a>
+                </Link>
               </div>
               <div className="my-4 flex items-center gap-4">
                 <hr className="w-full border-gray-300" />
