@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 import Daftar from "../Elements/Button/Daftar";
 import InputForm from "../Elements/Input/index";
 import Masuk from "../Elements/Button/Masuk";
-import Google from "../Elements/Button/google";
+import Google from "../Elements/Button/Google";
 
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
