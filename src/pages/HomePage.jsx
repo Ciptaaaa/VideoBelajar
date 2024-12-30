@@ -4,7 +4,7 @@ import AvatarLogo from "../assets/Avatar.png";
 import Carousel from "../assets/carousel.jpg";
 
 import { Link } from "react-router-dom";
-import CourseList from "./courseList";
+import CourseList from "../components/courseList";
 
 const HomePage = () => {
   //gunakan state untuk mengontrol dropdown
