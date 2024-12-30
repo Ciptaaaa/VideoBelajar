@@ -13,6 +13,7 @@ const inputForm = (props) => {
     showPassword,
     togglePasswordVisibility,
     hasToggle,
+    id,
   } = props;
 
   return (
@@ -20,9 +21,9 @@ const inputForm = (props) => {
       <Label htmlFor={name}>{label}</Label>
 
       <div className="relative mt-2">
-        <input
+        <Input
           type={hasToggle && showPassword ? "text" : type} // Menggunakan showPassword untuk mengontrol visibilitas password
-          id={name}
+          id={id}
           name={name}
           placeholder={placeholder}
           className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-400"
