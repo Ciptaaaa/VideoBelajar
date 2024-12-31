@@ -37,13 +37,16 @@ const FormForgotPass = () => {
           type="email"
           placeholder="example@mail.com"
           name="email"
+          id="email"
         />
         {/* Password */}
+        
         <InputForm
           label="Password"
           type={showPassword ? "text" : "password"}
           placeholder="******"
           name="password"
+          id="password"
           showPassword={showPassword} // Menyediakan nilai showPassword
           togglePasswordVisibility={togglePasswordVisibility} // Fungsi untuk toggle visibilitas password
           hasToggle={true} // Mengaktifkan tombol toggle
@@ -55,6 +58,7 @@ const FormForgotPass = () => {
           type={showPassword ? "text" : "password"}
           placeholder="******"
           name="password1"
+          id="password1"
           showPassword={showPassword} // Menyediakan nilai showPassword
           togglePasswordVisibility={togglePasswordVisibility} // Fungsi untuk toggle visibilitas password
           hasToggle={true} // Mengaktifkan tombol toggle

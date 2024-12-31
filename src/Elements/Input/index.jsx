@@ -14,6 +14,7 @@ const inputForm = (props) => {
     togglePasswordVisibility,
     hasToggle,
     id,
+    autoComplete,
   } = props;
 
   return (
@@ -25,6 +26,7 @@ const inputForm = (props) => {
           type={hasToggle && showPassword ? "text" : type} // Menggunakan showPassword untuk mengontrol visibilitas password
           id={id}
           name={name}
+          autoComplete={autoComplete}
           placeholder={placeholder}
           className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-400"
         />

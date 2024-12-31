@@ -44,8 +44,9 @@ const FormDaftar = () => {
         <InputForm
           label="Full Name"
           type="text"
-          placeholder="Enter your name.."
+          placeholder="Insert your name.."
           name="fullName"
+          id="fullName"
         />
 
         <InputForm
@@ -53,6 +54,7 @@ const FormDaftar = () => {
           type="email"
           placeholder="example@mail.com"
           name="email"
+          id="email"
         />
 
         <div className="mb-4">
@@ -65,7 +67,11 @@ const FormDaftar = () => {
           <div className="flex">
             <div className="flex items-center border border-gray-300 rounded-l-md bg-gray-100 px-4">
               <img src={Flag} alt="Bendera Indonesia" className="h-5 w-5" />
-              <select className="text-gray-700 bg-gray-100 text-sm outline-none border-none">
+              <select
+                className="text-gray-700 bg-gray-100 text-sm outline-none border-none"
+                name="selectFlag"
+                id="selectFlag"
+              >
                 <option value="+62">+62</option>
                 <option value="+123">+123</option>
                 <option value="+742">+74</option>
@@ -90,6 +96,7 @@ const FormDaftar = () => {
             <input
               type="tel"
               name="phone"
+              id="phone"
               className="w-full px-3 py-2 border border-gray-300 rounded-r-md focus:outline-none focus:ring-2 focus:ring-green-400"
               placeholder="628xx-xxxx-xxxx"
               pattern="[0-9]*"
@@ -107,6 +114,7 @@ const FormDaftar = () => {
           showPassword={showPassword} // Menyediakan nilai showPassword
           togglePasswordVisibility={togglePasswordVisibility} // Fungsi untuk toggle visibilitas password
           hasToggle={true} // Mengaktifkan tombol toggle
+          id="password"
         />
 
         <InputForm
@@ -117,6 +125,7 @@ const FormDaftar = () => {
           showPassword={showPassword} // Menyediakan nilai showPassword
           togglePasswordVisibility={togglePasswordVisibility} // Fungsi untuk toggle visibilitas password
           hasToggle={true} // Mengaktifkan tombol toggle
+          id="password1"
         />
 
         <Masuk>Daftar</Masuk>
