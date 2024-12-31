@@ -1,6 +1,6 @@
 import React from "react";
-import Input from "./input";
-import Label from "./label";
+import Input from "./Input";
+import Label from "./Label";
 import PasswordLogo from "../../assets/logo password.svg";
 import PasswordLogoOpen from "../../assets/logo-password-open.svg";
 
