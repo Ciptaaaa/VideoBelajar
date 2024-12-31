@@ -19,6 +19,8 @@ const FormLogin = () => {
           type="email"
           placeholder="example@mail.com"
           name="email"
+          id="email"
+          autoComplete="email"
         />
         <InputForm
           label="Password"
@@ -28,6 +30,7 @@ const FormLogin = () => {
           showPassword={showPassword} // Menyediakan nilai showPassword
           togglePasswordVisibility={togglePasswordVisibility} // Fungsi untuk toggle visibilitas password
           hasToggle={true} // Mengaktifkan tombol toggle
+          id="password"
         />
 
         <div className="text-right my-4">
