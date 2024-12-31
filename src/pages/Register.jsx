@@ -5,7 +5,7 @@ import AvatarLogo from "../assets/Avatar.png";
 import { Link, useNavigate } from "react-router-dom";
 import InputForm from "../Elements/Input/index";
 import Masuk from "../Elements/Button/Masuk";
-import Google from "../Elements/Button/google";
+import Google from "../Elements/Button/Google";
 
 const Register = () => {
   const [showPassword, setShowPassword] = useState(false);
