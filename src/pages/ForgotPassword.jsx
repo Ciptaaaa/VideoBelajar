@@ -2,7 +2,7 @@ import React from "react";
 import NavbarLogo from "../assets/logo.png";
 import AvatarLogo from "../assets/Avatar.png";
 import { Link } from "react-router-dom";
-import FormForgotPass from "../Layouts/FormForgotPass";
+import FormForgotPass from "../Fragments/FormForgotPass";
 
 const ForgotPassword = () => {
   return (
