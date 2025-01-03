@@ -5,7 +5,7 @@ const Masuk = (props) => {
   return (
     <div className="flex items-center justify-between mb-6">
       <button
-        className={`w-full ${className} hover:bg-green-600 text-white font-semibold py-2 px-4 rounded-md`}
+        className={`w-full ${className} hover:bg-green-600 text-white font-semibold py-3 px-4 rounded-md cursor-pointer`}
         type="submit"
       >
         {children}

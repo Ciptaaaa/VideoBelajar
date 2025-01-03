@@ -1,12 +1,11 @@
 import React from "react";
 import NavbarLogo from "../assets/logo.png";
-
-import Banner from "../components/Banner";
 import { Link } from "react-router-dom";
 import CourseList from "../components/courseList";
 import NewsLetter from "../components/newsLetter";
 import Footer from "../components/Footer";
 import Navbar from "../components/Navbar";
+import Carousel from "../components/Carousel";
 
 const HomePage = () => {
   return (
@@ -23,7 +22,8 @@ const HomePage = () => {
           <Navbar />
         </div>
       </header>
-      <Banner />
+      <Carousel />
+
       <section className="pt-16">
         <div className="container max-w-[1200px] mx-auto px-4 text-start">
           <h1 className="text-3xl md:text-4xl font-bold mb-4">
