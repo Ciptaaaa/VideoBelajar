@@ -43,24 +43,30 @@ const courses = [
     price: "RP.300.000",
   },
 ];
+const CourseList = () => {
+  const repeatedCourses = Array.from(
+    { length: 12 },
+    (_, index) => courses[index % courses.length]
+  );
 
-const CourseList = () => (
-  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-    {courses.map((course, index) => (
-      <CourseCard
-        key={index}
-        imgSrc={course.imgSrc}
-        title={course.title}
-        description={course.description}
-        ownerImg={course.ownerImg}
-        ownerName={course.ownerName}
-        ownerTitle={course.ownerTitle}
-        rating={course.rating}
-        reviews={course.reviews}
-        price={course.price}
-      />
-    ))}
-  </div>
-);
+  return (
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      {repeatedCourses.map((course, index) => (
+        <CourseCard
+          key={index}
+          imgSrc={course.imgSrc}
+          title={course.title}
+          description={course.description}
+          ownerImg={course.ownerImg}
+          ownerName={course.ownerName}
+          ownerTitle={course.ownerTitle}
+          rating={course.rating}
+          reviews={course.reviews}
+          price={course.price}
+        />
+      ))}
+    </div>
+  );
+};
 
 export default CourseList;
