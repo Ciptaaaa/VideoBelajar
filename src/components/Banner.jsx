@@ -1,48 +1,55 @@
 import React from "react";
-import banner from "../assets/banner.jpg";
-const Banner = () => {
+
+const Banner = ({ title, description, imageSrc, rating, reviewScore }) => {
+  const renderStars = (rating) => {
+    const fullStars = Math.floor(rating);
+    const halfStar = rating % 1 !== 0;
+    const emptyStars = 5 - fullStars - (halfStar ? 1 : 0);
+
+    return (
+      <>
+        {Array(fullStars)
+          .fill("★")
+          .map((star, index) => (
+            <span key={`full-${index}`} className="text-yellow-500">
+              {star}
+            </span>
+          ))}
+        {halfStar && <span className="text-yellow-500">☆</span>}
+        {Array(emptyStars)
+          .fill("★")
+          .map((star, index) => (
+            <span key={`empty-${index}`} className="text-gray-400">
+              {star}
+            </span>
+          ))}
+      </>
+    );
+  };
+
+  // console.log("Review Score:", reviewScore); // Debugging log
+
   return (
-    <section className="relative bg-cover bg-center py-16 rounded-xl overflow-hidden mx-4 sm:mx-8 md:mx-auto max-w-[1170px] mt-6 md:mt-10 lg:mt-16">
-      <div className="absolute inset-0">
-        <img
-          src={banner}
-          alt="dining"
-          className="w-full h-full absolute z-0 object-cover hidden xl:block max-w-[1200px] "
-        />
-
-        <img
-          src={banner}
-          alt="dining"
-          className="w-full h-full absolute z-0 object-cover hidden sm:block xl:hidden mr-4 ml-4 "
-        />
-
-        <img
-          src={banner}
-          alt="dining"
-          className="w-full h-full absolute z-0 object-cover sm:hidden  "
-        />
-      </div>
-      <div className="absolute inset-0 bg-black opacity-70"></div>
-      <div className="relative container mx-auto px-4 md:px-6 lg:px-10 pt-12 text-center text-white">
+    <section
+      className="relative bg-cover bg-center py-16 rounded-xl overflow-hidden mx-4 sm:mx-8 md:mx-auto max-w-[1170px] mt-6 md:mt-10 lg:mt-16"
+      style={{
+        backgroundImage: imageSrc ? `url(${imageSrc})` : "none",
+      }}
+    >
+      <div className="absolute inset-0 bg-black opacity-70 z-0"></div>
+      <div className="relative z-10 p-8 container mx-auto px-4 md:px-6 lg:px-10 pt-12 text-left text-white">
         <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-6 leading-tight">
-          Revolusi Pembelajaran: Temukan <br />
-          Ilmu baru melalui platform video
-          <br />
-          Interaktif
+          {title}
         </h1>
-        <p className="text-gray-200 mb-8 text-sm sm:text-base lg:text-lg leading-relaxed">
-          Temukan ilmu baru yang menarik dan mendalam melalui koleksi video
-          pembelajaran berkualitas tinggi. <br />
-          Tidak hanya itu, Anda juga dapat berpartisipasi dalam latihan
-          interaktif yang akan meningkatkan pemahaman Anda.
+        <p className="text-gray-200 mb-2 text-sm sm:text-base lg:text-lg leading-relaxed">
+          {description}
         </p>
-
-        <a
-          href="#"
-          className="bg-green-500 text-white px-4 py-2 sm:px-6 sm:py-3 rounded-md hover:bg-green-600 text-sm md:text-base"
-        >
-          Temukan Video Course untuk Dipelajari!
-        </a>
+        <div className="flex justify-between items-center">
+          <div className="flex items-center">
+            {renderStars(rating)}
+            <span className="text-gray-400 underline ml-2">{reviewScore}</span>
+          </div>
+        </div>
       </div>
     </section>
   );
