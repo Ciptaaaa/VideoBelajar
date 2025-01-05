@@ -1,12 +1,13 @@
 import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import HomePage from "./pages/homePage";
+import HomePage from "./pages/HomePage";
 import Login from "./pages/Login";
-import ForgotPassword from "./pages/forgotPassword";
+import ForgotPassword from "./pages/ForgotPassword";
 import Register from "./pages/Register";
-import DescCourse from "./pages/descCourse";
+import DescCourse from "./pages/DescCourse";
 import User from "./pages/User";
 import Profile from "./pages/Profile";
+
 const App = () => {
   return (
     <Router>

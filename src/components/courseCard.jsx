@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import DescCourse from "../pages/descCourse";
+import DescCourse from "../pages/DescCourse";
 
 const CourseCard = ({
   imgSrc,
