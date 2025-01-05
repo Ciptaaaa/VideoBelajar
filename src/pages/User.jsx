@@ -1,15 +1,21 @@
-import React, { useState } from "react";
+import React from "react";
+import { Link, useNavigate } from "react-router-dom";
 import NavbarLogo from "../assets/logo.png";
-import AvatarLogo from "../assets/Avatar.png";
-import { Link } from "react-router-dom";
+import Navbar from "../components/Navbar";
+import Carousel from "../components/Carousel";
 import CourseList from "../components/courseList";
 import NewsLetter from "../components/newsLetter";
 import Footer from "../components/Footer";
-import Carousel from "../components/Carousel";
-const homePage = () => {
-  const [isDropDownOpen, setIsDropDownOpen] = useState(false);
-  const toggleDropDown = () => {
-    setIsDropDownOpen((prev) => !prev);
+const User = () => {
+  const userData = JSON.parse(localStorage.getItem("user"));
+  const userName = userData ? userData.fullName : "Guest";
+  const navigate = useNavigate();
+
+  // Fungsi Logout
+  const handleLogout = () => {
+    // Hapus data user dari localStorage
+    localStorage.removeItem("loggedin");
+    navigate("/login");
   };
   return (
     <>
@@ -22,29 +28,16 @@ const homePage = () => {
               className="h-6 md:h-8"
             />
           </Link>
-          <nav className="relative flex items-center space-x-2">
-            <button onClick={toggleDropDown} className="focus:outline-none">
-              <img src={AvatarLogo} alt="Profil" className="h-10 w-10" />
-            </button>
-            {isDropDownOpen && (
-              <div className=" absolute top-full right-0 mt-2 w-48 bg-white rounded-md shadow-lg z-50 ">
-                <ul className="py-1">
-                  <li>
-                    <Link
-                      to="/login"
-                      className="block px-2 py-1 text-gray-500 hover:bg-gray-100"
-                    >
-                      Login
-                    </Link>
-                  </li>
-                </ul>
-              </div>
-            )}
-          </nav>
+          <Navbar
+            menuItems={[
+              { label: `Hi, ${userName}`, to: "/profile" },
+              { label: "Admin", to: "/admin" },
+              { label: "Logout", onClick: handleLogout }, 
+            ]}
+          />
         </div>
       </header>
       <Carousel />
-
       <section className="pt-16">
         <div className="container max-w-[1200px] mx-auto px-4 text-start">
           <h1 className="text-3xl md:text-4xl font-bold mb-4">
@@ -79,4 +72,4 @@ const homePage = () => {
   );
 };
 
-export default homePage;
+export default User;

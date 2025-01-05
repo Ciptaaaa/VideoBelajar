@@ -9,7 +9,7 @@ import AvatarInstructor from "../assets/avatarInstructor.svg";
 import Down from "../assets/down.png";
 import Check from "../assets/check.png";
 
-const descCourse = () => {
+const DescCourse = () => {
   return (
     <>
       <header className="bg-white shadow-sm">
@@ -287,4 +287,4 @@ const descCourse = () => {
   );
 };
 
-export default descCourse;
+export default DescCourse;
