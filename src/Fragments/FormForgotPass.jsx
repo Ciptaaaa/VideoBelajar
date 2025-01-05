@@ -4,7 +4,7 @@ import Masuk from "../Elements/Button/Masuk";
 import Google from "../Elements/Button/Google";
 import { useNavigate } from "react-router-dom";
 
-const FormForgotPass = () => {
+const formForgotPass = () => {
   const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
 
@@ -40,7 +40,7 @@ const FormForgotPass = () => {
           id="email"
         />
         {/* Password */}
-        
+
         <InputForm
           label="Password"
           type={showPassword ? "text" : "password"}
@@ -63,7 +63,12 @@ const FormForgotPass = () => {
           togglePasswordVisibility={togglePasswordVisibility} // Fungsi untuk toggle visibilitas password
           hasToggle={true} // Mengaktifkan tombol toggle
         />
-        <Masuk>Confirm Reset Password</Masuk>
+        <Masuk
+          type="submit"
+          className="w-full bg-green-500 hover:bg-green-700 text-white font-semibold py-2 px-4 rounded-md text-center"
+        >
+          Confirm Reset Password
+        </Masuk>
 
         <div className="my-4 flex items-center gap-4">
           <hr className="w-full border-gray-300" />
@@ -76,4 +81,4 @@ const FormForgotPass = () => {
   );
 };
 
-export default FormForgotPass;
+export default formForgotPass;

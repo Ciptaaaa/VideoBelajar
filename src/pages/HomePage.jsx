@@ -1,13 +1,16 @@
-import React from "react";
+import React, { useState } from "react";
 import NavbarLogo from "../assets/logo.png";
+import AvatarLogo from "../assets/Avatar.png";
 import { Link } from "react-router-dom";
 import CourseList from "../components/courseList";
 import NewsLetter from "../components/newsLetter";
 import Footer from "../components/Footer";
-import Navbar from "../components/Navbar";
 import Carousel from "../components/Carousel";
-
-const HomePage = () => {
+const homePage = () => {
+  const [isDropDownOpen, setIsDropDownOpen] = useState(false);
+  const toggleDropDown = () => {
+    setIsDropDownOpen((prev) => !prev);
+  };
   return (
     <>
       <header className="bg-white shadow-sm">
@@ -19,7 +22,25 @@ const HomePage = () => {
               className="h-6 md:h-8"
             />
           </Link>
-          <Navbar />
+          <nav className="relative flex items-center space-x-2">
+            <button onClick={toggleDropDown} className="focus:outline-none">
+              <img src={AvatarLogo} alt="Profil" className="h-10 w-10" />
+            </button>
+            {isDropDownOpen && (
+              <div className=" absolute top-full right-0 mt-2 w-48 bg-white rounded-md shadow-lg z-50 ">
+                <ul className="py-1">
+                  <li>
+                    <Link
+                      to="/login"
+                      className="block px-2 py-1 text-gray-500 hover:bg-gray-100"
+                    >
+                      Login
+                    </Link>
+                  </li>
+                </ul>
+              </div>
+            )}
+          </nav>
         </div>
       </header>
       <Carousel />
@@ -58,4 +79,4 @@ const HomePage = () => {
   );
 };
 
-export default HomePage;
+export default homePage;

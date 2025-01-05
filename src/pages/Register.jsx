@@ -2,7 +2,7 @@ import React from "react";
 import NavbarLogo from "../assets/logo.png";
 import AvatarLogo from "../assets/Avatar.png";
 import { Link } from "react-router-dom";
-import FormDaftar from "../Fragments/FormDaftar";
+import FormDaftar from "../Fragments/formDaftar";
 
 const Register = () => {
   return (

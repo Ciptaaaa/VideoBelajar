@@ -2,9 +2,8 @@ import React from "react";
 import NavbarLogo from "../assets/logo.png";
 import AvatarLogo from "../assets/Avatar.png";
 import { Link } from "react-router-dom";
-import FormForgotPass from "../Fragments/FormForgotPass";
-
-const ForgotPassword = () => {
+import FormForgotPass from "../Fragments/formForgotPass";
+const forgotPassword = () => {
   return (
     <>
       <header className="bg-white shadow-sm">
@@ -40,4 +39,4 @@ const ForgotPassword = () => {
   );
 };
 
-export default ForgotPassword;
+export default forgotPassword;

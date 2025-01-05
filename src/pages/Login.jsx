@@ -2,7 +2,7 @@ import React from "react";
 import NavbarLogo from "../assets/logo.png";
 import AvatarLogo from "../assets/Avatar.png";
 import { Link } from "react-router-dom";
-import FormLogin from "../Fragments/FormLogin";
+import FormLogin from "../Fragments/formLogin";
 
 const Login = () => {
   return (
