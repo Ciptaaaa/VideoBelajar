@@ -5,7 +5,7 @@ import InputForm from "../Elements/Input/index";
 import Masuk from "../Elements/Button/Masuk";
 import Google from "../Elements/Button/Google";
 
-const FormDaftar = () => {
+const formDaftar = () => {
   const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
 
@@ -13,30 +13,36 @@ const FormDaftar = () => {
     setShowPassword((prev) => !prev);
   };
 
-  const handleSubmit = (event) => {
-    event.preventDefault(); // Mencegah submit default
+  const [input, setInput] = useState({
+    fullName: "",
+    email: "",
+    phone: "",
+    password: "",
+    confirmPassword: "",
+  });
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    localStorage.setItem("user", JSON.stringify(input));
 
-    // Mengambil nilai input berdasarkan nama input
-    const fullName = event.target.fullName.value;
-    const email = event.target.email.value;
-    const phone = event.target.phone.value;
-    const password = event.target.password.value;
-    const confirmPassword = event.target.password1.value;
-    // Cek apakah ada field yang kosong
-    if (!fullName || !email || !phone || !password || !confirmPassword) {
-      alert("Please fill in all fields.");
-      return; // Hentikan jika ada field yang kosong
-    }
-
-    // Cek apakah password dan confirm password sama
-    if (password !== confirmPassword) {
-      alert("Passwords do not match.");
-      return; // Hentikan jika password tidak cocok
-    }
-
-    // Jika semua validasi lolos, navigasi ke login
     navigate("/login");
   };
+  // Mengambil nilai input berdasarkan nama input
+  // const fullName = event.target.fullName.value;
+  // const email = event.target.email.value;
+  // const phone = event.target.phone.value;
+  // const password = event.target.password.value;
+  // const confirmPassword = event.target.password1.value;
+  // Cek apakah ada field yang kosong
+  // if (!fullName || !email || !phone || !password || !confirmPassword) {
+  //   alert("Please fill in all fields.");
+  //   return; // Hentikan jika ada field yang kosong
+  // }
+
+  // Cek apakah password dan confirm password sama
+  // if (password !== confirmPassword) {
+  //   alert("Passwords do not match.");
+  //   return; // Hentikan jika password tidak cocok
+  // }
 
   return (
     <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
@@ -46,6 +52,10 @@ const FormDaftar = () => {
           type="text"
           placeholder="Insert your name.."
           name="fullName"
+          value={input.fullName}
+          onChange={(e) =>
+            setInput({ ...input, [e.target.name]: e.target.value })
+          }
           id="fullName"
         />
 
@@ -54,6 +64,10 @@ const FormDaftar = () => {
           type="email"
           placeholder="example@mail.com"
           name="email"
+          value={input.email}
+          onChange={(e) =>
+            setInput({ ...input, [e.target.name]: e.target.value })
+          }
           id="email"
         />
 
@@ -96,6 +110,10 @@ const FormDaftar = () => {
             <input
               type="tel"
               name="phone"
+              value={input.phone}
+              onChange={(e) =>
+                setInput({ ...input, [e.target.name]: e.target.value })
+              }
               id="phone"
               className="w-full px-3 py-2 border border-gray-300 rounded-r-md focus:outline-none focus:ring-2 focus:ring-green-400"
               placeholder="628xx-xxxx-xxxx"
@@ -115,20 +133,33 @@ const FormDaftar = () => {
           togglePasswordVisibility={togglePasswordVisibility} // Fungsi untuk toggle visibilitas password
           hasToggle={true} // Mengaktifkan tombol toggle
           id="password"
+          value={input.password}
+          onChange={(e) =>
+            setInput({ ...input, [e.target.name]: e.target.value })
+          }
         />
 
         <InputForm
           label="Confirm Password"
           type={showPassword ? "text" : "password"}
           placeholder="******"
-          name="password1"
+          name="confirmPassword"
           showPassword={showPassword} // Menyediakan nilai showPassword
           togglePasswordVisibility={togglePasswordVisibility} // Fungsi untuk toggle visibilitas password
           hasToggle={true} // Mengaktifkan tombol toggle
-          id="password1"
+          id="confirmPassword"
+          value={input.confirmPassword}
+          onChange={(e) =>
+            setInput({ ...input, [e.target.name]: e.target.value })
+          }
         />
 
-        <Masuk>Daftar</Masuk>
+        <Masuk
+          type="submit"
+          className="w-full bg-green-500 hover:bg-green-700 text-white font-semibold py-2 px-4 rounded-md text-center"
+        >
+          Daftar
+        </Masuk>
 
         <div className="my-4 flex items-center gap-4">
           <hr className="w-full border-gray-300" />
@@ -142,4 +173,4 @@ const FormDaftar = () => {
   );
 };
 
-export default FormDaftar;
+export default formDaftar;
