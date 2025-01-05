@@ -4,7 +4,7 @@ import HomePage from "./pages/HomePage";
 import Login from "./pages/Login";
 import ForgotPassword from "./pages/ForgotPassword";
 import Register from "./pages/Register";
-import DescCourse from "./pages/DescCourse";
+import DescCourse from "./pages/descCourse";
 import User from "./pages/User";
 import Profile from "./pages/Profile";
 
