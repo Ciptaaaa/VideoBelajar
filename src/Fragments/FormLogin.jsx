@@ -1,9 +1,10 @@
 import React, { useState } from "react";
-import Daftar from "../Elements/Button/Daftar";
+import { Link, useNavigate } from "react-router-dom";
+import { getUserData, setLoginStatus } from "../utils/authUtils";
 import InputForm from "../Elements/Input/index";
 import Masuk from "../Elements/Button/Masuk";
 import Google from "../Elements/Button/Google";
-import { Link, useNavigate } from "react-router-dom";
+import Daftar from "../Elements/Button/Daftar";
 
 const formLogin = () => {
   const navigate = useNavigate();
@@ -12,23 +13,23 @@ const formLogin = () => {
   const togglePasswordVisibility = () => {
     setShowPassword((prev) => !prev);
   };
-  const [input, setInput] = useState({
-    email: "",
-    password: "",
-  });
+  const [input, setInput] = useState({ email: "", password: "" });
+
   const handleLogin = (e) => {
     e.preventDefault();
-    const loggeduser = JSON.parse(localStorage.getItem("user"));
+    const user = getUserData();
     if (
-      input.email === loggeduser.email &&
-      input.password === loggeduser.password
+      user &&
+      input.email === user.email &&
+      input.password === user.password
     ) {
-      localStorage.setItem("loggedin", true);
+      setLoginStatus(true);
       navigate("/user");
     } else {
-      alert("Wrong email Or Passowrd");
+      alert("Wrong email or password");
     }
   };
+
   return (
     <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
       <form
@@ -42,28 +43,26 @@ const formLogin = () => {
           type="email"
           placeholder="example@mail.com"
           name="email"
+          id="email"
           value={input.email}
           onChange={(e) =>
             setInput({ ...input, [e.target.name]: e.target.value })
           }
-          id="email"
-          autoComplete="email"
         />
         <InputForm
           label="Password"
           type={showPassword ? "text" : "password"}
           placeholder="******"
           name="password"
+          id="password"
           value={input.password}
           onChange={(e) =>
             setInput({ ...input, [e.target.name]: e.target.value })
           }
-          showPassword={showPassword} // Menyediakan nilai showPassword
-          togglePasswordVisibility={togglePasswordVisibility} // Fungsi untuk toggle visibilitas password
-          hasToggle={true} // Mengaktifkan tombol toggle
-          id="password"
+          showPassword={showPassword}
+          togglePasswordVisibility={togglePasswordVisibility}
+          hasToggle={true}
         />
-
         <div className="text-right my-4">
           <Link
             to="/Forgot-Password"
@@ -73,14 +72,10 @@ const formLogin = () => {
           </Link>
         </div>
 
-        <Masuk
-          type="submit"
-          className="w-full bg-green-500 hover:bg-green-700 text-white font-semibold py-2 px-4 rounded-md text-center"
-        >
+        <Masuk type="submit" className="w-full bg-green-500">
           Login
         </Masuk>
         <Daftar>Daftar</Daftar>
-
         <div className="my-4 flex items-center gap-4">
           <hr className="w-full border-gray-300" />
           <p className="text-sm text-gray-800 text-center">atau</p>

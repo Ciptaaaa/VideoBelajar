@@ -1,18 +1,12 @@
 import React, { useState } from "react";
-import Flag from "../assets/flag_indo.svg";
 import { useNavigate } from "react-router-dom";
+import { saveUserData } from "../utils/authUtils";
 import InputForm from "../Elements/Input/index";
 import Masuk from "../Elements/Button/Masuk";
+import Flag from "../assets/flag_indo.svg";
 import Google from "../Elements/Button/Google";
 
 const formDaftar = () => {
-  const [showPassword, setShowPassword] = useState(false);
-  const navigate = useNavigate();
-
-  const togglePasswordVisibility = () => {
-    setShowPassword((prev) => !prev);
-  };
-
   const [input, setInput] = useState({
     fullName: "",
     email: "",
@@ -20,29 +14,25 @@ const formDaftar = () => {
     password: "",
     confirmPassword: "",
   });
+
+  const navigate = useNavigate();
+
+  //password toggle
+  const [showPassword, setShowPassword] = useState(false);
+
+  const togglePasswordVisibility = () => {
+    setShowPassword((prev) => !prev);
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    localStorage.setItem("user", JSON.stringify(input));
-
+    if (input.password !== input.confirmPassword) {
+      alert("Passwords do not match!");
+      return;
+    }
+    saveUserData(input);
     navigate("/login");
   };
-  // Mengambil nilai input berdasarkan nama input
-  // const fullName = event.target.fullName.value;
-  // const email = event.target.email.value;
-  // const phone = event.target.phone.value;
-  // const password = event.target.password.value;
-  // const confirmPassword = event.target.password1.value;
-  // Cek apakah ada field yang kosong
-  // if (!fullName || !email || !phone || !password || !confirmPassword) {
-  //   alert("Please fill in all fields.");
-  //   return; // Hentikan jika ada field yang kosong
-  // }
-
-  // Cek apakah password dan confirm password sama
-  // if (password !== confirmPassword) {
-  //   alert("Passwords do not match.");
-  //   return; // Hentikan jika password tidak cocok
-  // }
 
   return (
     <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
@@ -50,27 +40,25 @@ const formDaftar = () => {
         <InputForm
           label="Full Name"
           type="text"
-          placeholder="Insert your name.."
           name="fullName"
+          placeholder="enter your full name"
+          id="fullName"
           value={input.fullName}
           onChange={(e) =>
             setInput({ ...input, [e.target.name]: e.target.value })
           }
-          id="fullName"
         />
-
         <InputForm
           label="Email"
           type="email"
-          placeholder="example@mail.com"
           name="email"
+          placeholder="example@.com"
+          id="email"
           value={input.email}
           onChange={(e) =>
             setInput({ ...input, [e.target.name]: e.target.value })
           }
-          id="email"
         />
-
         <div className="mb-4">
           <label
             htmlFor="phone"
@@ -123,44 +111,37 @@ const formDaftar = () => {
             />
           </div>
         </div>
-
         <InputForm
           label="Password"
-          type={showPassword ? "text" : "password"}
-          placeholder="******"
+          type="password"
           name="password"
-          showPassword={showPassword} // Menyediakan nilai showPassword
-          togglePasswordVisibility={togglePasswordVisibility} // Fungsi untuk toggle visibilitas password
-          hasToggle={true} // Mengaktifkan tombol toggle
+          placeholder="**********"
           id="password"
           value={input.password}
           onChange={(e) =>
             setInput({ ...input, [e.target.name]: e.target.value })
           }
+          showPassword={showPassword}
+          togglePasswordVisibility={togglePasswordVisibility}
+          hasToggle={true}
         />
-
         <InputForm
           label="Confirm Password"
-          type={showPassword ? "text" : "password"}
-          placeholder="******"
+          type="password"
           name="confirmPassword"
-          showPassword={showPassword} // Menyediakan nilai showPassword
-          togglePasswordVisibility={togglePasswordVisibility} // Fungsi untuk toggle visibilitas password
-          hasToggle={true} // Mengaktifkan tombol toggle
+          placeholder="**********"
           id="confirmPassword"
           value={input.confirmPassword}
           onChange={(e) =>
             setInput({ ...input, [e.target.name]: e.target.value })
           }
+          showPassword={showPassword}
+          togglePasswordVisibility={togglePasswordVisibility}
+          hasToggle={true}
         />
-
-        <Masuk
-          type="submit"
-          className="w-full bg-green-500 hover:bg-green-700 text-white font-semibold py-2 px-4 rounded-md text-center"
-        >
+        <Masuk type="submit" className="w-full bg-green-500">
           Daftar
         </Masuk>
-
         <div className="my-4 flex items-center gap-4">
           <hr className="w-full border-gray-300" />
           <p className="text-sm text-gray-800 text-center">atau</p>
