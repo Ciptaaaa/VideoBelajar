@@ -6,42 +6,41 @@ import Footer from "../components/Footer";
 import avatarUser from "../assets/avatarUser.jpg"; // Avatar default
 import InputForm from "../Elements/Input";
 import Masuk from "../Elements/Button/Masuk";
+import {
+  getUserData,
+  getAvatar,
+  logoutUser,
+  deleteUserAccount,
+  saveUserChanges,
+} from "../utils/authUtils";
 
 const Profile = () => {
-  const userData = JSON.parse(localStorage.getItem("user"));
-  const userName = userData ? userData.fullName : "Guest";
   const navigate = useNavigate();
 
-  // State untuk menyimpan avatar
-  const [avatar, setAvatar] = useState(
-    localStorage.getItem("avatar") || avatarUser
-  );
+  // Ambil data pengguna dari authUtils
+  const userData = getUserData();
+  const userName = userData ? userData.fullName : "Guest";
 
-  // State untuk menyimpan data input form
+  // State untuk avatar dan form
+  const [avatar, setAvatar] = useState(getAvatar(avatarUser));
   const [name, setName] = useState(userData ? userData.fullName : "");
   const [email, setEmail] = useState(userData ? userData.email : "");
   const [phone, setPhone] = useState(userData ? userData.phone : "");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  const [errorMessage, setErrorMessage] = useState(""); // State untuk menyimpan pesan error
+  const [errorMessage, setErrorMessage] = useState("");
 
-  // Fungsi Logout
+  // Logout handler
   const handleLogout = () => {
-    // Hapus data user dari localStorage
-    localStorage.removeItem("loggedin");
-    navigate("/login");
+    logoutUser(navigate);
   };
 
-  // Fungsi Delete Account
+  // Delete account handler
   const handleDelete = () => {
-    // Hapus data user dari localStorage
-    localStorage.removeItem("user"); // Hapus data user dari localStorage
-    localStorage.removeItem("loggedin"); // Hapus status login
-    localStorage.removeItem("avatar"); // Hapus avatar
-    navigate("/login"); // Redirect ke halaman login setelah penghapusan akun
+    deleteUserAccount(navigate);
   };
 
-  // Fungsi untuk menangani perubahan pada input
+  // Handle form input changes
   const handleChange = (e) => {
     const { id, value } = e.target;
     if (id === "name") setName(value);
@@ -51,42 +50,19 @@ const Profile = () => {
     if (id === "confirmPassword") setConfirmPassword(value);
   };
 
-  // Fungsi untuk menyimpan perubahan ke localStorage
+  // Save changes handler
   const handleSaveChanges = () => {
-    // Validasi password dan confirmPassword
-    if (password !== confirmPassword) {
-      setErrorMessage("Password and confirm password do not match!");
-      return; // Hentikan eksekusi jika password tidak cocok
-    }
-
-    // Update data user di localStorage jika password valid
-    const updatedUser = {
-      fullName: name,
-      email: email,
-      phone: phone,
-      password: password, // simpan password baru
-      confirmPassword: confirmPassword, // simpan confirm password baru
-    };
-
-    localStorage.setItem("user", JSON.stringify(updatedUser));
-    setErrorMessage(""); // Clear error message after successful update
-    alert("Changes saved successfully!");
-  };
-
-  // Fungsi untuk menangani perubahan avatar
-  const handleAvatarChange = (e) => {
-    const file = e.target.files[0]; // Ambil file yang dipilih oleh pengguna
-    if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        const base64Avatar = reader.result; // Hasil konversi menjadi base64
-        setAvatar(base64Avatar); // Set state avatar dengan gambar baru
-        localStorage.setItem("avatar", base64Avatar); // Simpan avatar baru ke localStorage
-      };
-      reader.readAsDataURL(file); // Baca file sebagai data URL (base64)
+    const userData = { fullName: name, email, phone };
+    const success = saveUserChanges(
+      userData,
+      password,
+      confirmPassword,
+      setErrorMessage
+    );
+    if (success) {
+      alert("Changes saved successfully!");
     }
   };
-
   return (
     <>
       <header className="bg-white shadow-sm">
@@ -135,7 +111,6 @@ const Profile = () => {
                 id="avatar"
                 accept="image/*"
                 className="mt-2"
-                onChange={handleAvatarChange} // Panggil fungsi untuk mengganti avatar
               />
             </div>
           </div>

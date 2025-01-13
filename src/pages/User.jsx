@@ -6,16 +6,15 @@ import Carousel from "../components/Carousel";
 import CourseList from "../components/courseList";
 import NewsLetter from "../components/newsLetter";
 import Footer from "../components/Footer";
+import { getUserName, logoutUser } from "../utils/authUtils";
 const User = () => {
-  const userData = JSON.parse(localStorage.getItem("user"));
-  const userName = userData ? userData.fullName : "Guest";
   const navigate = useNavigate();
+  const userName = getUserName();
 
-  // Fungsi Logout
+  // Fungsi untuk logout dan navigasi ke halaman login
   const handleLogout = () => {
-    // Hapus data user dari localStorage
-    localStorage.removeItem("loggedin");
-    navigate("/login");
+    logoutUser(navigate);
+    
   };
   return (
     <>
@@ -32,7 +31,7 @@ const User = () => {
             menuItems={[
               { label: `Hi, ${userName}`, to: "/profile" },
               { label: "Admin", to: "/admin" },
-              { label: "Logout", onClick: handleLogout }, 
+              { label: "Logout", onClick: handleLogout },
             ]}
           />
         </div>
