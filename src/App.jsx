@@ -7,6 +7,9 @@ import Register from "./pages/Register";
 import DescCourse from "./pages/descCourse";
 import User from "./pages/User";
 import Profile from "./pages/Profile";
+import Admin from "./pages/Admin";
+import Product from "./pages/Product";
+import AddUser from "./pages/AddUser";
 
 const App = () => {
   return (
@@ -18,7 +21,10 @@ const App = () => {
         <Route path="/Register" element={<Register />} />
         <Route path="/user" element={<User />} />
         <Route path="/profile" element={<Profile />} />
-        <Route path="/DescCourse" element={<DescCourse />} />
+        <Route path="/DescCourse/:id" element={<DescCourse />} />
+        <Route path="/Admin/Dashboard" element={<Admin />} />
+        <Route path="/Admin/Product" element={<Product />} />
+        <Route path="/Admin/AddUser" element={<AddUser />} />
       </Routes>
     </Router>
   );

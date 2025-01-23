@@ -1,58 +1,76 @@
 import React from "react";
-import Navbar from "../components/Navbar";
-import NavbarLogo from "../assets/logo.png";
-import { Link } from "react-router-dom";
+import Header from "../components/Header";
+import { Link, useParams } from "react-router-dom";
 import Footer from "../components/Footer";
 import Banner from "../components/Banner";
-import Kelas1 from "../assets/kelas1.png";
-import AvatarInstructor from "../assets/avatarInstructor.svg";
-import Down from "../assets/down.png";
+import Accordion from "../components/Accordion";
+import { courses } from "../components/courseList";
 import Check from "../assets/check.png";
-
 const DescCourse = () => {
+  const { id } = useParams(); // Mengambil parameter id dari URL
+  const course = courses.find((course) => course.id === id); // Cari kursus berdasarkan id
+
+  if (!course) {
+    return <p>Kursus tidak ditemukan</p>;
+  }
+  const accordionData = [
+    {
+      title: "Introduction Course 1: Foundation of Data Analyst",
+      lessons: [
+        { name: "The basics of user experience design", duration: "45 menit" },
+        { name: "Jobs in the field of user experience", duration: "40 menit" },
+        { name: "The product development life cycle", duration: "30 menit" },
+      ],
+    },
+    {
+      title: "Introduction Course 2: Learn Fast Data Analyst",
+      lessons: [
+        { name: "Advanced user experience design", duration: "50 menit" },
+        { name: "UX research methods", duration: "35 menit" },
+        { name: "Prototyping techniques", duration: "40 menit" },
+      ],
+    },
+    {
+      title: " Introduction Course 3: Intermediate Data Analyst",
+      lessons: [
+        { name: "Data visualization techniques", duration: "60 menit" },
+        { name: "Data modeling basics", duration: "45 menit" },
+        { name: "Introduction to SQL", duration: "40 menit" },
+      ],
+    },
+  ];
   return (
     <>
-      <header className="bg-white shadow-sm">
-        <div className="container mx-auto max-w-[1200px] px-4 md:px-6 lg:px-10 py-4 flex justify-between items-center">
-          <Link to="/" className="block">
-            <img
-              src={NavbarLogo}
-              alt="Logo Video Belajar"
-              className="h-6 md:h-8"
-            />
-          </Link>
-          <Navbar />
-        </div>
-      </header>
+      <Header />
       <main className="pt-6">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <nav className="flex mb-4 mx-4 max-w-[1170px]">
             <ol className="inline-flex items-center space-x-1 md:space-x-3">
               <li>
-                <a
-                  href="/"
+                <Link
+                  to="/user"
                   className="text-gray-700 hover:text-gray-900 text-sm font-medium"
                 >
                   Home
-                </a>
+                </Link>
               </li>
               <li className="text-gray-500">&gt;</li>
               <li>
-                <a
-                  href="/"
+                <Link
+                  to="#"
                   className="text-gray-700 hover:text-gray-900 text-sm font-medium"
                 >
                   Detail
-                </a>
+                </Link>
               </li>
             </ol>
           </nav>
           <Banner
-            title="Gapai karier impianmu sebagai Seorang Data Analyst."
-            description="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer tristique vitae purus at iaculis."
-            imageSrc={Kelas1}
-            rating={3}
-            reviewScore="3.0 (40)"
+            title={course.title}
+            description={course.description}
+            imageSrc={course.imgSrc}
+            rating={course.rating}
+            reviewScore={course.reviews}
           />
           <div className="lg:flex lg:space-x-8 mt-8 mx-4 max-w-[1170px]">
             <div className="lg:w-2/3">
@@ -61,19 +79,7 @@ const DescCourse = () => {
                   Deskripsi
                 </h2>
                 <p className="text-gray-700 leading-relaxed">
-                  Ipsam aliquam iure facilis facilis. Optio nam quas natus
-                  labore dolorem quos ut molestiae. Veniam praesentium suscipit
-                  quibusdam. Consequuntur quis quidem itaque. Optio eius nulla
-                  nihil accusantium libero facilis animi qui. Tempore in
-                  voluptatibus iste porro neque doloribus incidunt. Eveniet
-                  quibusdam ab deleniti dolor pariatur quidem necessitatibus.
-                  Rerum ipsam temporibus delectus. Officiis maxime pariatur
-                  doloribus. Tempora doloribus harum quia dolorum facilis
-                  tempore minima doloribus corporis. Quasi illum odio. Modi
-                  expedita architecto error sit quae illum. Rerum temporibus
-                  quia esse voluptas aliquam. Ut deleniti unde. Amet ab
-                  accusantium eaque dolore veniam quis illo. Numquam pariatur ea
-                  distinctio consectetur necessitatibus nisi.
+                  {course.description}
                 </p>
               </div>
               <div className="bg-white rounded-lg border p-6 mb-6">
@@ -84,16 +90,16 @@ const DescCourse = () => {
                   <div className="bg-gray-50 rounded-lg border p-4">
                     <div className="flex items-center space-x-4">
                       <img
-                        src={AvatarInstructor}
+                        src={course.ownerImg}
                         alt="Avatar_Instructor"
                         className="w-12 h-12 rounded-full"
                       />
                       <div>
                         <p className="font-semibold text-gray-900">
-                          Cipta LeonHeart
+                          {course.ownerName}
                         </p>
                         <p className="text-sm text-gray-600">
-                          Front End Developer
+                          {course.ownerTitle}
                         </p>
                       </div>
                     </div>
@@ -107,16 +113,16 @@ const DescCourse = () => {
                   <div className="bg-gray-50 rounded-lg border p-4">
                     <div className="flex items-center space-x-4">
                       <img
-                        src={AvatarInstructor}
+                        src={course.ownerImg}
                         alt="Avatar_Instructor"
                         className="w-12 h-12 rounded-full"
                       />
                       <div>
                         <p className="font-semibold text-gray-900">
-                          Cipta LeonHeart
+                          {course.ownerName}
                         </p>
                         <p className="text-sm text-gray-600">
-                          Front End Developer
+                          {course.ownerTitle}
                         </p>
                       </div>
                     </div>
@@ -129,61 +135,7 @@ const DescCourse = () => {
                   </div>
                 </div>
               </div>
-              <div className="bg-white rounded-lg border p-6 mb-6">
-                <h2 className="text-xl font-bold text-gray-900 mb-4">
-                  Kamu akan mempelajari
-                </h2>
-                <div className="border border-gray-200 rounded-lg">
-                  <div className="border-b">
-                    <button className="w-full text-left p-4 focus:outline-none focus:bg-gray-100 hover:bg-gray-100 flex justify-between items-center">
-                      <span className="text-green-600 font-semibold">
-                        Introduction Course 1: Foundation of Data Analyst
-                      </span>
-                      <img
-                        src={Down}
-                        alt="Select_Option"
-                        className="w-6 h-6 text-gray-500 transform "
-                      />
-                    </button>
-                  </div>
-                  <div className="border-b">
-                    <button className="w-full text-left p-4 focus:outline-none focus:bg-gray-100 hover:bg-gray-100 flex justify-between items-center">
-                      <span className="text-green-600 font-semibold">
-                        Introduction Course 2: Learn Fast Data Analyst
-                      </span>
-                      <img
-                        src={Down}
-                        alt="Select_Option"
-                        className="w-6 h-6 text-gray-500 transform "
-                      />
-                    </button>
-                  </div>
-                  <div className="border-b">
-                    <button className="w-full text-left p-4 focus:outline-none focus:bg-gray-100 hover:bg-gray-100 flex justify-between items-center">
-                      <span className="text-green-600 font-semibold">
-                        Introduction Course 3: Intermediate Data Analyst
-                      </span>
-                      <img
-                        src={Down}
-                        alt="Select_Option"
-                        className="w-6 h-6 text-gray-500 transform "
-                      />
-                    </button>
-                  </div>
-                  <div className="border-b">
-                    <button className="w-full text-left p-4 focus:outline-none focus:bg-gray-100 hover:bg-gray-100 flex justify-between items-center">
-                      <span className="text-green-600 font-semibold">
-                        Introduction Course 4: Advance Data Analyst
-                      </span>
-                      <img
-                        src={Down}
-                        alt="Select_Option"
-                        className="w-6 h-6 text-gray-500 transform "
-                      />
-                    </button>
-                  </div>
-                </div>
-              </div>
+              <Accordion title="Kamu akan Mempelajari" items={accordionData} />
               <div className="bg-white rounded-lg border p-6 mb-6">
                 <div className="text-xl font-bold text-gray-900 mb-4">
                   {" "}
@@ -197,13 +149,13 @@ const DescCourse = () => {
             <div className="lg:w-1/3">
               <div className="bg-white rounded-lg border p-6 mb-6">
                 <h2 className="text-lg font-bold text-gray-900 mb-2">
-                  Gapai Karier Impianmu sebagai Seorang Data Analyst
+                  {`Gapai Karier Impianmu sebagai Seorang Data ${course.title}`}
                 </h2>
                 <div className="flex justify-between">
                   <div className="flex items-center text-green-600 text-xl font-bold mb-2">
-                    Rp.300.000
+                    {`${course.price}`}
                     <div className="text-gray-500 line-through ml-2 text-sm">
-                      Rp.600.000
+                     {`${course.originalPrice}`}
                     </div>
                   </div>
                   <div>
