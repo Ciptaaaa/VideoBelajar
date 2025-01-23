@@ -1,31 +1,30 @@
 import React from "react";
 
 const Banner = ({ title, description, imageSrc, rating, reviewScore }) => {
-  const renderStars = (rating) => {
-    const fullStars = Math.floor(rating);
-    const halfStar = rating % 1 !== 0;
-    const emptyStars = 5 - fullStars - (halfStar ? 1 : 0);
-
-    return (
-      <>
-        {Array(fullStars)
-          .fill("★")
-          .map((star, index) => (
-            <span key={`full-${index}`} className="text-yellow-500">
-              {star}
-            </span>
-          ))}
-        {halfStar && <span className="text-yellow-500">☆</span>}
-        {Array(emptyStars)
-          .fill("★")
-          .map((star, index) => (
-            <span key={`empty-${index}`} className="text-gray-400">
-              {star}
-            </span>
-          ))}
-      </>
-    );
-  };
+  // const renderStars = (rating) => {
+  //   const fullStars = Math.floor(rating);
+  //   const halfStar = rating % 1 !== 0;
+  //   const emptyStars = 5 - fullStars - (halfStar ? 1 : 0);
+  //   return (
+  //     <>
+  //       {Array(fullStars)
+  //         .fill("★")
+  //         .map((star, index) => (
+  //           <span key={`full-${index}`} className="text-yellow-500">
+  //             {star}
+  //           </span>
+  //         ))}
+  //       {halfStar && <span className="text-yellow-500">☆</span>}
+  //       {Array(emptyStars)
+  //         .fill("★")
+  //         .map((star, index) => (
+  //           <span key={`empty-${index}`} className="text-gray-400">
+  //             {star}
+  //           </span>
+  //         ))}
+  //     </>
+  //   );
+  // };
 
   // console.log("Review Score:", reviewScore); // Debugging log
 
@@ -45,8 +44,8 @@ const Banner = ({ title, description, imageSrc, rating, reviewScore }) => {
           {description}
         </p>
         <div className="flex justify-between items-center">
-          <div className="flex items-center">
-            {renderStars(rating)}
+          <div className="flex items-center text-yellow-500">
+            {rating}
             <span className="text-gray-400 underline ml-2">{reviewScore}</span>
           </div>
         </div>
