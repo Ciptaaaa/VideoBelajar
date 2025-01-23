@@ -5,7 +5,7 @@ const Label = (props) => {
   return (
     <label
       htmlFor={htmlFor}
-      className="block text-gray-700 text-sm font-medium mb-2"
+      className="block text-gray-700 text-sm font-semibold mb-2"
     >
       {children} <span className="text-red-500">*</span>
     </label>
