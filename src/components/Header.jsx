@@ -14,7 +14,7 @@ const Header = ({ navigate }) => {
   return (
     <header className="bg-white shadow-sm">
       <div className="container mx-auto max-w-[1200px] px-4 md:px-6 lg:px-10 py-4 flex justify-between items-center">
-        <Link to="/" className="block">
+        <Link to="/user" className="block">
           <img
             src={NavbarLogo}
             alt="Logo Video Belajar"
@@ -24,7 +24,7 @@ const Header = ({ navigate }) => {
         <Navbar
           menuItems={[
             { label: `Hi, ${userName}`, to: "/profile" },
-            { label: "Admin", to: "/admin" },
+            { label: "Admin", to: "/Admin/Dashboard" },
             { label: "Logout", onClick: handleLogout },
           ]}
         />
