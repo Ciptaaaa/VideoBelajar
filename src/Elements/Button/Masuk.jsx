@@ -3,7 +3,7 @@ import React from "react";
 
 const Masuk = ({ type = "submit", className, onClick, children }) => {
   return (
-    <div className="w-full flex items-center justify-between mb-6">
+    <div className="">
       <button
         type={type} // Default type is 'submit', but it can be overridden
         className={`px-4 py-2 text-white rounded-md focus:outline-none ${className}`}

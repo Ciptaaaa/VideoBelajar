@@ -1,41 +1,13 @@
 import React from "react";
-import { Link, useNavigate } from "react-router-dom";
-import NavbarLogo from "../assets/logo.png";
-import Navbar from "../components/Navbar";
 import Carousel from "../components/Carousel";
 import CourseList from "../components/courseList";
 import NewsLetter from "../components/newsLetter";
 import Footer from "../components/Footer";
-import { getUserName, logoutUser } from "../utils/authUtils";
+import Header from "../components/Header";
 const User = () => {
-  const navigate = useNavigate();
-  const userName = getUserName();
-
-  // Fungsi untuk logout dan navigasi ke halaman login
-  const handleLogout = () => {
-    logoutUser(navigate);
-    
-  };
   return (
     <>
-      <header className="bg-white shadow-sm">
-        <div className="container mx-auto max-w-[1200px] px-4 md:px-6 lg:px-10 py-4 flex justify-between items-center">
-          <Link to="/" className="block">
-            <img
-              src={NavbarLogo}
-              alt="Logo Video Belajar"
-              className="h-6 md:h-8"
-            />
-          </Link>
-          <Navbar
-            menuItems={[
-              { label: `Hi, ${userName}`, to: "/profile" },
-              { label: "Admin", to: "/admin" },
-              { label: "Logout", onClick: handleLogout },
-            ]}
-          />
-        </div>
-      </header>
+      <Header />
       <Carousel />
       <section className="pt-16">
         <div className="container max-w-[1200px] mx-auto px-4 text-start">

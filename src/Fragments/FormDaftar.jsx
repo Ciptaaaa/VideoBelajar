@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { saveUserData } from "../utils/authUtils";
 import InputForm from "../Elements/Input/index";
 import Masuk from "../Elements/Button/Masuk";
@@ -139,6 +139,14 @@ const formDaftar = () => {
           togglePasswordVisibility={togglePasswordVisibility}
           hasToggle={true}
         />
+        <div className="text-right my-4">
+          <Link
+            to="/login"
+            className="text-sm text-gray-500 hover:text-gray-700"
+          >
+            Sudah punya akun?
+          </Link>
+        </div>
         <Masuk type="submit" className="w-full bg-green-500">
           Daftar
         </Masuk>
