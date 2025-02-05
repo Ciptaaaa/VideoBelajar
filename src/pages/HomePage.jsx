@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import NavbarLogo from "../assets/logo.png";
 import AvatarLogo from "../assets/Avatar.png";
 import { Link } from "react-router-dom";
-import CourseList from "../components/courseList";
+import CourseList from "../services/data/courseList";
 import NewsLetter from "../components/newsLetter";
 import Footer from "../components/Footer";
 import Carousel from "../components/Carousel";
