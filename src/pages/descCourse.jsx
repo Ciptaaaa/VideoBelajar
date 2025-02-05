@@ -4,7 +4,7 @@ import { Link, useParams } from "react-router-dom";
 import Footer from "../components/Footer";
 import Banner from "../components/Banner";
 import Accordion from "../components/Accordion";
-import { courses } from "../components/courseList";
+import { courses } from "../services/data/courseList";
 import Check from "../assets/check.png";
 const DescCourse = () => {
   const { id } = useParams(); // Mengambil parameter id dari URL
@@ -155,7 +155,7 @@ const DescCourse = () => {
                   <div className="flex items-center text-green-600 text-xl font-bold mb-2">
                     {`${course.price}`}
                     <div className="text-gray-500 line-through ml-2 text-sm">
-                     {`${course.originalPrice}`}
+                      {`${course.originalPrice}`}
                     </div>
                   </div>
                   <div>

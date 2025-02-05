@@ -1,6 +1,6 @@
 import React from "react";
 import Carousel from "../components/Carousel";
-import CourseList from "../components/courseList";
+import CourseList from "../services/data/courseList";
 import NewsLetter from "../components/newsLetter";
 import Footer from "../components/Footer";
 import Header from "../components/Header";

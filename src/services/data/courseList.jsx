@@ -1,9 +1,9 @@
 import React from "react";
 import CourseCard from "./courseCard";
-import kelas1 from "../assets/kelas1.png"; // Contoh path untuk gambar
-import kelas2 from "../assets/kelas2.png";
-import kelas3 from "../assets/kelas3.png";
-import AvatarInstructor from "../assets/avatarInstructor.svg";
+import kelas1 from "../../assets/kelas1.png"; // Contoh path untuk gambar
+import kelas2 from "../../assets/kelas1.png";
+import kelas3 from "../../assets/kelas1.png";
+import AvatarInstructor from "../../assets/avatarInstructor.svg";
 
 export const courses = [
   {

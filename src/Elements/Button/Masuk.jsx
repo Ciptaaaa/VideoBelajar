@@ -6,7 +6,7 @@ const Masuk = ({ type = "submit", className, onClick, children }) => {
     <div className="">
       <button
         type={type} // Default type is 'submit', but it can be overridden
-        className={`px-4 py-2 text-white rounded-md focus:outline-none ${className}`}
+        className={`px-4 py-2  rounded-md focus:outline-none ${className}`}
         onClick={onClick}
       >
         {children}
