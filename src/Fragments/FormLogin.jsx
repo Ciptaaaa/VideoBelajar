@@ -72,7 +72,7 @@ const formLogin = () => {
           </Link>
         </div>
 
-        <Masuk type="submit" className="w-full bg-green-500">
+        <Masuk type="submit" className="w-full bg-green-500 text-white">
           Login
         </Masuk>
         <Daftar>Daftar</Daftar>

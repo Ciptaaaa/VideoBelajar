@@ -147,7 +147,7 @@ const formDaftar = () => {
             Sudah punya akun?
           </Link>
         </div>
-        <Masuk type="submit" className="w-full bg-green-500">
+        <Masuk type="submit" className="w-full bg-green-500 text-white">
           Daftar
         </Masuk>
         <div className="my-4 flex items-center gap-4">
