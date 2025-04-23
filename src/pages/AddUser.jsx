@@ -1,9 +1,36 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import AdminHeader from "../components/AdminHeader";
 import InputForm from "../Elements/Input/index";
 import Masuk from "../Elements/Button/Masuk";
-
+import useUserStore from "../services/api/useUserStore";
 const AddUser = () => {
+  const { addUser, users, fetchUsers } = useUserStore();
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    phone: "",
+    avatar: "",
+    password: "",
+  });
+
+  useEffect(() => {
+    fetchUsers();
+  }, []);
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const result = await addUser(formData); // Tambah user ke API
+    if (result.success) {
+      alert("User berhasil ditambahkan!");
+      fetchUsers();
+      setFormData({ name: "", email: "", phone: "", avatar: "", password: "" });
+    } else {
+      alert("Gagal menambahkan user.");
+    }
+  };
   return (
     <>
       <AdminHeader />
@@ -14,54 +41,43 @@ const AddUser = () => {
           </div>
         </div>
         <div className="bg-white border-[0.1px] rounded-lg p-6">
-          <form action="#" method="post">
+          <form action="#" method="post" onSubmit={handleSubmit}>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div className="mb-2 text-lg ">
-                <InputForm
-                  label="Name"
-                  type="Text"
-                  placeholder="Masukan Nama User yang mau Ditambahkan"
-                  name="nameNewUser"
-                  id="nameNewUser"
-                  
-                />
-              </div>
-              <div className="mb-2 text-lg">
-                <InputForm
-                  label="Email"
-                  type="email"
-                  placeholder="Masukan Email User yang mau Ditambahkan"
-                  name="emailNewUser"
-                  id="emailNewUser"
-                />
-              </div>
-              <div className="mb-2 text-lg">
-                <InputForm
-                  label="Phone"
-                  type="tel"
-                  placeholder="Masukan Nomor Telefon User yang mau Ditambahkan"
-                  name="phoneNewUser"
-                  id="phoneNewUser"
-                />
-              </div>
-              <div className="mb-2 text-lg">
-                <InputForm
-                  label="Avatar Url"
-                  type="url"
-                  placeholder="Masukan link Avatar User yang mau Ditambahkan"
-                  name="avatarNewUser"
-                  id="avatarNewUser"
-                />
-              </div>
-              <div className="mb-2 text-lg">
-                <InputForm
-                  label="Password"
-                  type="password"
-                  placeholder="Masukan Password User yang mau Ditambahkan"
-                  name="passwordNewUser"
-                  id="passwordNewUser"
-                />
-              </div>
+              <InputForm
+                label="Name"
+                type="text"
+                name="name"
+                value={formData.name}
+                onChange={handleChange}
+              />
+              <InputForm
+                label="Email"
+                type="email"
+                name="email"
+                value={formData.email}
+                onChange={handleChange}
+              />
+              <InputForm
+                label="Phone"
+                type="tel"
+                name="phone"
+                value={formData.phone}
+                onChange={handleChange}
+              />
+              <InputForm
+                label="Avatar URL"
+                type="url"
+                name="avatar"
+                value={formData.avatar}
+                onChange={handleChange}
+              />
+              <InputForm
+                label="Password"
+                type="password"
+                name="password"
+                value={formData.password}
+                onChange={handleChange}
+              />
             </div>
             <div className="flex justify-end mt-4">
               <Masuk
@@ -78,7 +94,40 @@ const AddUser = () => {
             User List
           </h2>
           <div className="bg-white border-[0.1px] rounded-lg p-6">
-            <div className="overflow-x-hidden"></div>
+            <div className="overflow-x-hidden">
+              <table className="min-w-full border-collapse border border-gray-300">
+                <thead>
+                  <tr className="bg-gray-100">
+                    <th className="border border-gray-300 px-4 py-2">Avatar</th>
+                    <th className="border border-gray-300 px-4 py-2">Name</th>
+                    <th className="border border-gray-300 px-4 py-2">Email</th>
+                    <th className="border border-gray-300 px-4 py-2">Phone</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {users.map((user) => (
+                    <tr key={user.id} className="text-center">
+                      <td className="border border-gray-300 px-4 py-2">
+                        <img
+                          src={user.avatar}
+                          alt={user.name}
+                          className="w-10 h-10 rounded-full mx-auto"
+                        />
+                      </td>
+                      <td className="border border-gray-300 px-4 py-2">
+                        {user.name}
+                      </td>
+                      <td className="border border-gray-300 px-4 py-2">
+                        {user.email}
+                      </td>
+                      <td className="border border-gray-300 px-4 py-2">
+                        {user.phone}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
           </div>
         </div>
       </div>

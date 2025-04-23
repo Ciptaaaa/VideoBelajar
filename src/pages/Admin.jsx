@@ -1,7 +1,40 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Masuk from "../Elements/Button/Masuk";
 import AdminHeader from "../components/AdminHeader";
+import axios from "axios";
+import { logoutUser } from "../utils/authUtils";
+import { useNavigate } from "react-router-dom";
 const Admin = () => {
+  const [users, setUsers] = useState([]);
+  const [products, setProducts] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchResources = async () => {
+      try {
+        const user = import.meta.env.VITE_API_URL;
+        const product = import.meta.env.VITE_API_URL_Product;
+
+        const [userResponse, productResponse] = await Promise.all([
+          axios.get(user),
+          axios.get(product),
+        ]);
+
+        setUsers(userResponse.data);
+        setProducts(productResponse.data);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchResources();
+  }, []);
+  const navigate = useNavigate();
+  const handleLogout = () => {
+    logoutUser(navigate);
+  };
   return (
     <div className="flex flex-col md:flex-row h-screen">
       <AdminHeader />
@@ -10,42 +43,43 @@ const Admin = () => {
           <h1 className="text-2xl font-bold text-gray-900 mb-4 md:mb-0">
             Admin Dashboard
           </h1>
+
           <div className="flex flex-col md:flex-row items-start md:items-center space-y-4 md:space-y-0 md:space-x-4">
             <Masuk
               type="button"
-              //   onClick={}
-              className="bg-red-500 hover:bg-red-700"
+              onClick={handleLogout}
+              className="bg-red-500 hover:bg-red-700 text-white"
             >
               Logout
             </Masuk>
           </div>
         </div>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          <div className="bg-white border-[0.1px] rounded-lg p-6">
-            <h2 className="text-lg font-semibold text-gray-900 mb-4">
-              Total User
-            </h2>
-            <p className="text-3xl font-bold text-gray-900">200</p>
+        {loading ? (
+          <p>Loading...</p>
+        ) : (
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="bg-white border-[0.1px] rounded-lg p-6">
+              <h2 className="text-lg font-semibold text-gray-900 mb-4">
+                Total User
+              </h2>
+              <p className="text-3xl font-bold text-gray-900">{users.length}</p>
+            </div>
+            <div className="bg-white border-[0.1px] rounded-lg p-6">
+              <h2 className="text-lg font-semibold text-gray-900 mb-4">
+                Total Order
+              </h2>
+              <p className="text-3xl font-bold text-gray-900">67</p>
+            </div>
+            <div className="bg-white border-[0.1px] rounded-lg p-6">
+              <h2 className="text-lg font-semibold text-gray-900 mb-4">
+                Total Product
+              </h2>
+              <p className="text-3xl font-bold text-gray-900">
+                {products.length}
+              </p>
+            </div>
           </div>
-          <div className="bg-white border-[0.1px] rounded-lg p-6">
-            <h2 className="text-lg font-semibold text-gray-900 mb-4">
-              Total Order
-            </h2>
-            <p className="text-3xl font-bold text-gray-900">67</p>
-          </div>
-          <div className="bg-white border-[0.1px] rounded-lg p-6">
-            <h2 className="text-lg font-semibold text-gray-900 mb-4">
-              Total Product
-            </h2>
-            <p className="text-3xl font-bold text-gray-900">12</p>
-          </div>
-          <div className="bg-white border-[0.1px] rounded-lg p-6">
-            <h2 className="text-lg font-semibold text-gray-900 mb-4">
-              User Online
-            </h2>
-            <p className="text-3xl font-bold text-gray-900">1</p>
-          </div>
-        </div>
+        )}
         <div className="mt-6">
           <h2 className="text-xl font-semibold text-gray-900 mb-4">
             Recent Activity
@@ -54,10 +88,15 @@ const Admin = () => {
             <ul>
               <li className="mb-2 border-b pt-2">
                 <p className="text-gray-900">
-                  User <span className="font-semibold">Jhon Dee</span>{" "}
+                  User{" "}
+                  <span className="font-semibold">
+                    {users.find((user) => user.id === "1")?.name}
+                  </span>{" "}
                   Registered
                 </p>
-                <p className="text-gray-600 text-sm">2 Hours Ago</p>
+                <p className="text-gray-600 text-sm">
+                  {users.find((user) => user.id === "1")?.createdAt}
+                </p>
               </li>
               <li className="mb-2 border-b pt-2">
                 <p className="text-gray-900">
@@ -67,7 +106,11 @@ const Admin = () => {
               </li>
               <li className="mb-2 border-b pt-2">
                 <p className="text-gray-900">
-                  Product <span className="font-semibold">New Product</span>{" "}
+                  Product{" "}
+                  <span className="font-semibold">
+                    {products.find((product) => product.id === "1")
+                      ?.nameProduct || "Tidak ditemukan"}
+                  </span>{" "}
                   Added
                 </p>
                 <p className="text-gray-600 text-sm">2 Hours Ago</p>
