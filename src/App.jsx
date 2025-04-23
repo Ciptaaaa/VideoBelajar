@@ -11,6 +11,7 @@ import Admin from "./pages/Admin";
 import Product from "./pages/Product";
 import AddUser from "./pages/AddUser";
 import NotFoundPages from "./pages/NotFoundPages";
+import ProtectedRoute from "./utils/ProtectedRoute";
 
 const App = () => {
   return (
@@ -19,12 +20,54 @@ const App = () => {
       <Route path="/login" element={<Login />} />
       <Route path="/forgot-Password" element={<ForgotPassword />} />
       <Route path="/Register" element={<Register />} />
-      <Route path="/user" element={<User />} />
-      <Route path="/profile" element={<Profile />} />
-      <Route path="/DescCourse/:id" element={<DescCourse />} />
-      <Route path="/Admin/Dashboard" element={<Admin />} />
-      <Route path="/Admin/Product" element={<Product />} />
-      <Route path="/Admin/AddUser" element={<AddUser />} />
+      <Route
+        path="/user"
+        element={
+          <ProtectedRoute>
+            <User />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/profile"
+        element={
+          <ProtectedRoute>
+            <Profile />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/DescCourse/:id"
+        element={
+          <ProtectedRoute>
+            <DescCourse />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/Admin/Dashboard"
+        element={
+          <ProtectedRoute>
+            <Admin />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/Admin/Product"
+        element={
+          <ProtectedRoute>
+            <Product />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/Admin/AddUser"
+        element={
+          <ProtectedRoute>
+            <AddUser />
+          </ProtectedRoute>
+        }
+      />
       <Route path="*" element={<NotFoundPages />} />
     </Routes>
   );

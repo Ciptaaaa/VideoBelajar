@@ -5,13 +5,27 @@ export const saveUserData = (user) => {
 
 // Fungsi untuk mendapatkan data pengguna dari localStorage
 export const getUserData = () => {
-  const user = localStorage.getItem("user");
-  return user ? JSON.parse(user) : null;
+  try {
+    const user = localStorage.getItem("user");
+    const parsedUser = user ? JSON.parse(user) : null;
+    return parsedUser || { fullName: "" }; // Jika tidak ada user, kembalikan default "Guest"
+  } catch (e) {
+    console.warn("User data di localStorage rusak, dibersihkan.");
+    localStorage.removeItem("user");
+    return { fullName: "Guest" }; // Defaultkan "Guest" jika ada error
+  }
 };
 
 // Fungsi untuk memeriksa status login
 export const isUserLoggedIn = () => {
-  return JSON.parse(localStorage.getItem("loggedin")) || false;
+  try {
+    const logged = localStorage.getItem("loggedin");
+    return logged ? JSON.parse(logged) : false;
+  } catch (e) {
+    console.warn("Status login invalid, default ke false.");
+    localStorage.removeItem("loggedin");
+    return false;
+  }
 };
 
 // Fungsi untuk menyimpan status login ke localStorage
@@ -27,8 +41,15 @@ export const logoutUserProfile = () => {
 
 // Fungsi untuk mendapatkan nama pengguna atau nilai default "Guest"
 export const getUserName = () => {
-  const user = JSON.parse(localStorage.getItem("user"));
-  return user ? user.fullName : "Guest";
+  try {
+    const user = localStorage.getItem("user");
+    const parsed = user ? JSON.parse(user) : null;
+    return parsed?.fullName || "Guest"; // Mengambil fullName dari user atau default "Guest"
+  } catch (e) {
+    console.warn("Gagal ambil nama user:");
+    localStorage.removeItem("user");
+    return "Guest";
+  }
 };
 
 // Fungsi untuk logout pengguna

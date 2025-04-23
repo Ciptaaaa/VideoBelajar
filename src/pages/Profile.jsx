@@ -1,67 +1,65 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import NavbarLogo from "../assets/logo.png";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
-import avatarUser from "../assets/avatarUser.jpg"; // Avatar default
 import InputForm from "../Elements/Input";
 import Masuk from "../Elements/Button/Masuk";
-import {
-  getUserData,
-  getAvatar,
-  logoutUser,
-  deleteUserAccount,
-  saveUserChanges,
-} from "../utils/authUtils";
+import useUserStore from "../services/api/useUserStore";
 
 const Profile = () => {
   const navigate = useNavigate();
+  const { currentUser, updateUser, deleteUser } = useUserStore();
+  const [isEdit, setIsEdit] = useState(false);
+  const [editIsId, setEditIsId] = useState(null);
 
-  // Ambil data pengguna dari authUtils
-  const userData = getUserData();
-  const userName = userData ? userData.fullName : "Guest";
-
-  // State untuk avatar dan form
-  const [avatar, setAvatar] = useState(getAvatar(avatarUser));
-  const [name, setName] = useState(userData ? userData.fullName : "");
-  const [email, setEmail] = useState(userData ? userData.email : "");
-  const [phone, setPhone] = useState(userData ? userData.phone : "");
-  const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
-  const [errorMessage, setErrorMessage] = useState("");
-
-  // Logout handler
-  const handleLogout = () => {
-    logoutUser(navigate);
-  };
-
-  // Delete account handler
-  const handleDelete = () => {
-    deleteUserAccount(navigate);
-  };
-
-  // Handle form input changes
-  const handleChange = (e) => {
-    const { id, value } = e.target;
-    if (id === "name") setName(value);
-    if (id === "email") setEmail(value);
-    if (id === "phone") setPhone(value);
-    if (id === "password") setPassword(value);
-    if (id === "confirmPassword") setConfirmPassword(value);
-  };
-
-  // Save changes handler
-  const handleSaveChanges = () => {
-    const userData = { fullName: name, email, phone };
-    const success = saveUserChanges(
-      userData,
-      password,
-      confirmPassword,
-      setErrorMessage
+  const handleDelete = async () => {
+    const confirmDelete = window.confirm(
+      "Are you sure you want to delete your account?"
     );
-    if (success) {
-      alert("Changes saved successfully!");
+    if (confirmDelete) {
+      await deleteUser(currentUser.id);
+      navigate("/login");
     }
+  };
+
+  const [formData, setFormData] = useState({
+    id: "",
+    name: "",
+    email: "",
+    phone: "",
+    password: "",
+  });
+
+  useEffect(() => {
+    if (currentUser) {
+      setFormData({
+        id: currentUser.id,
+        name: currentUser.name || "",
+        email: currentUser.email || "",
+        phone: currentUser.phone || "",
+        password: "", // jangan autofill password
+      });
+    }
+  }, [currentUser]);
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (isEdit) {
+      updateUser({ ...formData, id: editIsId });
+      setIsEdit(false);
+      setEditIsId(null);
+    } else {
+      updateUser(formData);
+    }
+    setFormData({
+      name: "",
+      email: "",
+      phone: "",
+      password: "",
+    });
   };
   return (
     <>
@@ -74,13 +72,15 @@ const Profile = () => {
               className="h-6 md:h-8"
             />
           </Link>
-          <Navbar
-            menuItems={[
-              { label: `Hi, ${userName}`, to: "/profile" },
-              { label: "Admin", to: "/admin" },
-              { label: "Logout", onClick: handleLogout },
-            ]}
-          />
+          {currentUser && (
+            <Navbar
+              menuItems={[
+                { label: `Hi, ${currentUser.name}`, to: "/profile" },
+                { label: "Admin", to: "/Admin/Dashboard" },
+                { label: "Logout" },
+              ]}
+            />
+          )}
         </div>
       </header>
       <div className="max-w-4xl mx-auto p-4">
@@ -94,11 +94,13 @@ const Profile = () => {
         <div className="flex">
           <div className="w-1/3 p-4">
             <div className="flex flex-col items-center">
-              <img
-                src={avatar}
-                alt="User Avatar"
-                className="w-32 h-32 rounded-full mb-4 object-cover"
-              />
+              {currentUser && (
+                <img
+                  src={currentUser.avatar}
+                  alt="User Avatar"
+                  className="w-32 h-32 rounded-full mb-4 object-cover"
+                />
+              )}
               <label
                 htmlFor="avatar"
                 className="block text-gray-700 font-bold mb-2"
@@ -115,77 +117,35 @@ const Profile = () => {
             </div>
           </div>
           <div className="w-2/3 p-4">
-            <form action="">
+            <form action="post" onSubmit={handleSubmit}>
               <div className="mb-4">
-                <InputForm
-                  className="leading-tight focus:outline-none focus:shadow-outline"
-                  label="Name"
-                  id="name"
-                  type="text"
-                  value={name}
-                  onChange={handleChange}
-                />
+                {Object.keys(formData).map(
+                  (key) =>
+                    key !== "id" && (
+                      <div
+                        key={key}
+                        className="leading-tight focus:outline-none focus:shadow-outline"
+                      >
+                        <InputForm
+                          label={key}
+                          type={key === "password" ? "password" : "text"}
+                          name={key}
+                          value={formData[key]}
+                          onChange={handleChange}
+                        />
+                      </div>
+                    )
+                )}
               </div>
-              <div className="mb-4">
-                <InputForm
-                  className="leading-tight focus:outline-none focus:shadow-outline"
-                  label="Email"
-                  id="email"
-                  type="email"
-                  value={email}
-                  onChange={handleChange}
-                />
-              </div>
-              <div className="mb-4">
-                <InputForm
-                  className="leading-tight focus:outline-none focus:shadow-outline"
-                  label="Phone"
-                  id="phone"
-                  type="tel"
-                  value={phone}
-                  onChange={handleChange}
-                />
-              </div>
-              <div className="mb-4">
-                <InputForm
-                  className="leading-tight focus:outline-none focus:shadow-outline"
-                  label="New Password"
-                  id="password"
-                  type="password"
-                  value={password}
-                  onChange={handleChange}
-                />
-              </div>
-              <div className="mb-4">
-                <InputForm
-                  className="leading-tight focus:outline-none focus:shadow-outline"
-                  label="Confirm Password"
-                  id="confirmPassword"
-                  type="password"
-                  value={confirmPassword}
-                  onChange={handleChange}
-                />
-              </div>
-
-              {/* Tampilkan pesan kesalahan jika ada */}
-              {errorMessage && (
-                <div className="text-red-500 text-sm mt-2 mb-2">
-                  {errorMessage}
-                </div>
-              )}
 
               <div className="flex items-center justify-between">
-                <Masuk
-                  type="button"
-                  className="bg-blue-500 hover:bg-blue-700"
-                  onClick={handleSaveChanges}
-                >
+                <Masuk type="submit" className="bg-blue-500 hover:bg-blue-700 text-white">
                   Save Changes
                 </Masuk>
                 <Masuk
                   type="button"
                   onClick={handleDelete}
-                  className="bg-red-500 hover:bg-red-700"
+                  className="bg-red-500 hover:bg-red-700 text-white"
                 >
                   Delete Account
                 </Masuk>

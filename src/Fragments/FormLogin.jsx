@@ -1,32 +1,50 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { getUserData, setLoginStatus } from "../utils/authUtils";
 import InputForm from "../Elements/Input/index";
 import Masuk from "../Elements/Button/Masuk";
 import Google from "../Elements/Button/Google";
 import Daftar from "../Elements/Button/Daftar";
+import useUserStore from "../services/api/useUserStore";
+import axios from "axios";
+
+const API_URL = import.meta.env.VITE_API_URL;
 
 const formLogin = () => {
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
+  const { loginUser, setCurrentUser } = useUserStore();
 
   const togglePasswordVisibility = () => {
     setShowPassword((prev) => !prev);
   };
   const [input, setInput] = useState({ email: "", password: "" });
-
-  const handleLogin = (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
-    const user = getUserData();
-    if (
-      user &&
-      input.email === user.email &&
-      input.password === user.password
-    ) {
-      setLoginStatus(true);
-      navigate("/user");
-    } else {
-      alert("Wrong email or password");
+
+    try {
+      const response = await axios.get(API_URL);
+      const users = response.data;
+
+      const user = users.find(
+        (u) => u.email === input.email && u.password === input.password
+      );
+
+      if (user) {
+        const safeUserData = {
+          name: user.name,
+          fullName: user.fullName,
+          avatar: user.avatar,
+        };
+        localStorage.setItem("user", JSON.stringify(safeUserData));
+        setCurrentUser(user); // set ke zustand
+        localStorage.setItem("loggedin", "true");
+        navigate("/user");
+      } else {
+        alert("Email atau password salah.");
+      }
+    } catch (error) {
+      console.error("Login error:", error);
+      alert("Terjadi kesalahan saat login.");
     }
   };
 

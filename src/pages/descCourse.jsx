@@ -1,18 +1,32 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Header from "../components/Header";
 import { Link, useParams } from "react-router-dom";
 import Footer from "../components/Footer";
 import Banner from "../components/Banner";
 import Accordion from "../components/Accordion";
-import { courses } from "../services/data/courseList";
 import Check from "../assets/check.png";
+import useProductStore from "../services/api/useProductStore";
 const DescCourse = () => {
-  const { id } = useParams(); // Mengambil parameter id dari URL
-  const course = courses.find((course) => course.id === id); // Cari kursus berdasarkan id
+  const { products, fetchProducts } = useProductStore();
+  const { id } = useParams();
 
-  if (!course) {
-    return <p>Kursus tidak ditemukan</p>;
+  useEffect(() => {
+    fetchProducts();
+  }, [fetchProducts]);
+
+  const selectedProduct = products.find((p) => p.id === id);
+
+  if (!selectedProduct) {
+    return (
+      <div className="flex w-52 flex-col gap-4">
+        <div className="skeleton h-32 w-full"></div>
+        <div className="skeleton h-4 w-28"></div>
+        <div className="skeleton h-4 w-full"></div>
+        <div className="skeleton h-4 w-full"></div>
+      </div>
+    );
   }
+
   const accordionData = [
     {
       title: "Introduction Course 1: Foundation of Data Analyst",
@@ -66,11 +80,11 @@ const DescCourse = () => {
             </ol>
           </nav>
           <Banner
-            title={course.title}
-            description={course.description}
-            imageSrc={course.imgSrc}
-            rating={course.rating}
-            reviewScore={course.reviews}
+            title={selectedProduct.Title}
+            description={selectedProduct.descriptionClass}
+            imageSrc={selectedProduct.photoProduct}
+            rating={selectedProduct.ratingCourse}
+            reviewScore={selectedProduct.totalRiview}
           />
           <div className="lg:flex lg:space-x-8 mt-8 mx-4 max-w-[1170px]">
             <div className="lg:w-2/3">
@@ -79,7 +93,7 @@ const DescCourse = () => {
                   Deskripsi
                 </h2>
                 <p className="text-gray-700 leading-relaxed">
-                  {course.description}
+                  {selectedProduct.descriptionClass}
                 </p>
               </div>
               <div className="bg-white rounded-lg border p-6 mb-6">
@@ -90,39 +104,36 @@ const DescCourse = () => {
                   <div className="bg-gray-50 rounded-lg border p-4">
                     <div className="flex items-center space-x-4">
                       <img
-                        src={course.ownerImg}
+                        src={selectedProduct.photoOwner}
                         alt="Avatar_Instructor"
                         className="w-12 h-12 rounded-full"
                       />
                       <div>
                         <p className="font-semibold text-gray-900">
-                          {course.ownerName}
+                          {selectedProduct.ownerCourse}
                         </p>
                         <p className="text-sm text-gray-600">
-                          {course.ownerTitle}
+                          {selectedProduct.roleOwner}
                         </p>
                       </div>
                     </div>
                     <p className="mt-4 text-gray-700 text-sm">
-                      Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                      Fuga cumque incidunt totam tenetur veritatis obcaecati aut
-                      hic laudantium minima non dolorum ipsam, velit eos quae
-                      officiis exercitationem ipsum odit numquam.
+                      {selectedProduct.descriptionClass}
                     </p>
                   </div>
                   <div className="bg-gray-50 rounded-lg border p-4">
                     <div className="flex items-center space-x-4">
                       <img
-                        src={course.ownerImg}
+                        src={selectedProduct.photoOwner}
                         alt="Avatar_Instructor"
                         className="w-12 h-12 rounded-full"
                       />
                       <div>
                         <p className="font-semibold text-gray-900">
-                          {course.ownerName}
+                          {selectedProduct.ownerCourse}
                         </p>
                         <p className="text-sm text-gray-600">
-                          {course.ownerTitle}
+                          {selectedProduct.roleOwner}
                         </p>
                       </div>
                     </div>
@@ -142,25 +153,30 @@ const DescCourse = () => {
                   Rating dan Riview
                 </div>
                 <div className="relative">
-                  <h1>NANTI DI MAPING DATA !! SOON</h1>
+                  <h1>
+                    Lorem ipsum dolor, sit amet consectetur adipisicing elit.
+                    Est quisquam animi sed mollitia ducimus, laborum odio
+                    doloribus! Optio laboriosam, delectus, dignissimos et eum
+                    velit ratione reiciendis explicabo dolor dolorem id.
+                  </h1>
                 </div>
               </div>
             </div>
             <div className="lg:w-1/3">
               <div className="bg-white rounded-lg border p-6 mb-6">
                 <h2 className="text-lg font-bold text-gray-900 mb-2">
-                  {`Gapai Karier Impianmu sebagai Seorang Data ${course.title}`}
+                  {`Gapai Karier Impianmu sebagai Seorang Data ${selectedProduct.Tittle}`}
                 </h2>
                 <div className="flex justify-between">
                   <div className="flex items-center text-green-600 text-xl font-bold mb-2">
-                    {`${course.price}`}
+                    {`Rp.${selectedProduct.discountPrice}`}
                     <div className="text-gray-500 line-through ml-2 text-sm">
-                      {`${course.originalPrice}`}
+                      {`Rp.${selectedProduct.Price}`}
                     </div>
                   </div>
                   <div>
                     <span className="inline-flex items-center rounded-md bg-yellow-400 px-2 py-1 text-xs font-medium text-white ring-1 ring-inset ring-yellow-600/20 ">
-                      Discount 50%
+                      {`Discount ${selectedProduct.discount}`}
                     </span>
                   </div>
                 </div>
