@@ -1,15 +1,18 @@
-import React, { useState } from "react";
-import avatarUser from "../assets/avatarUser.jpg"; // Avatar pengguna setelah login
-import AvatarLogo from "../assets/Avatar.png"; // Avatar default untuk pengguna yang belum login
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-
+import useUserStore from "../services/api/useUserStore";
 const Navbar = ({ menuItems = [] }) => {
   const [isDropDownOpen, setIsDropDownOpen] = useState(false);
 
-  // Cek status login
-  const isLoggedIn = localStorage.getItem("loggedin");
-  // Jika sudah login, tampilkan avatarUser, jika tidak, tampilkan AvatarLogo
-  const avatar = isLoggedIn ? avatarUser : AvatarLogo;
+  const { currentUser, fetchCurrentUser } = useUserStore();
+
+  useEffect(() => {
+    if (!currentUser) {
+      fetchCurrentUser(); // Panggil saat component mount
+    }
+  }, []);
+
+  if (!currentUser) return null;
 
   const toggleDropDown = () => {
     setIsDropDownOpen((prev) => !prev);
@@ -19,7 +22,7 @@ const Navbar = ({ menuItems = [] }) => {
     <nav className="relative flex items-center space-x-2">
       <button onClick={toggleDropDown} className="focus:outline-none">
         <img
-          src={avatar} // Menggunakan avatar yang sesuai dengan status login
+          src={currentUser.avatar} // Menggunakan avatar yang sesuai dengan status login
           alt="Profil"
           className="h-8 w-8 rounded-full object-cover"
         />

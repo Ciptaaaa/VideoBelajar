@@ -1,11 +1,14 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate,  } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import NavbarLogo from "../assets/logo.png";
-import { getUserName, logoutUser } from "../utils/authUtils";
+import { logoutUser } from "../utils/authUtils";
+import useUserStore from "../services/api/useUserStore";
 
-const Header = ({ navigate }) => {
-  const userName = getUserName();
+const Header = () => {
+  const { currentUser} = useUserStore();
+  const navigate = useNavigate();
+
 
   const handleLogout = () => {
     logoutUser(navigate);
@@ -21,9 +24,10 @@ const Header = ({ navigate }) => {
             className="h-6 md:h-8"
           />
         </Link>
+
         <Navbar
           menuItems={[
-            { label: `Hi, ${userName}`, to: "/profile" },
+            { label: `Hi, ${currentUser.name}`, to: "/profile" },
             { label: "Admin", to: "/Admin/Dashboard" },
             { label: "Logout", onClick: handleLogout },
           ]}
