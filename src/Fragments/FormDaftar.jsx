@@ -1,14 +1,16 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { saveUserData } from "../utils/authUtils";
 import InputForm from "../Elements/Input/index";
 import Masuk from "../Elements/Button/Masuk";
 import Flag from "../assets/flag_indo.svg";
 import Google from "../Elements/Button/Google";
+import axios from "axios";
+const API_URL = import.meta.env.VITE_API_URL;
 
 const formDaftar = () => {
   const [input, setInput] = useState({
     fullName: "",
+    name: "",
     email: "",
     phone: "",
     password: "",
@@ -23,15 +25,40 @@ const formDaftar = () => {
   const togglePasswordVisibility = () => {
     setShowPassword((prev) => !prev);
   };
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+
     if (input.password !== input.confirmPassword) {
       alert("Passwords do not match!");
       return;
     }
-    saveUserData(input);
-    navigate("/login");
+    if (isSubmitting) return; // cegah klik ganda
+    setIsSubmitting(true); // Mulai loading
+
+    try {
+      const response = await axios.post(API_URL, {
+        fullName: input.fullName,
+        name: input.name,
+        email: input.email,
+        phone: input.phone,
+        password: input.password,
+      });
+
+      if (response.status === 201 || response.status === 200) {
+        alert("Pendaftaran berhasil! Silakan login.");
+        navigate("/login");
+      }
+    } catch (error) {
+      console.error("Error saat daftar:", error);
+      alert(
+        error.response?.data?.message ||
+          "Terjadi kesalahan saat mendaftar. Coba lagi nanti."
+      );
+    } finally {
+      setIsSubmitting(false); // Reset loading
+    }
   };
 
   return (
@@ -44,6 +71,17 @@ const formDaftar = () => {
           placeholder="enter your full name"
           id="fullName"
           value={input.fullName}
+          onChange={(e) =>
+            setInput({ ...input, [e.target.name]: e.target.value })
+          }
+        />
+        <InputForm
+          label="Name"
+          type="text"
+          name="name"
+          placeholder="enter your name"
+          id="name"
+          value={input.name}
           onChange={(e) =>
             setInput({ ...input, [e.target.name]: e.target.value })
           }
@@ -147,8 +185,12 @@ const formDaftar = () => {
             Sudah punya akun?
           </Link>
         </div>
-        <Masuk type="submit" className="w-full bg-green-500 text-white">
-          Daftar
+        <Masuk
+          type="submit"
+          className="w-full bg-green-500 text-white"
+          disabled={isSubmitting}
+        >
+          {isSubmitting ? "Memproses..." : "Daftar"}
         </Masuk>
         <div className="my-4 flex items-center gap-4">
           <hr className="w-full border-gray-300" />
