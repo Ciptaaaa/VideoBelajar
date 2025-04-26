@@ -29,27 +29,45 @@ const DescCourse = () => {
 
   const accordionData = [
     {
-      title: "Introduction Course 1: Foundation of Data Analyst",
+      title: `Introduction Course 1: Foundation of ${selectedProduct.Tittle}`,
       lessons: [
-        { name: "The basics of user experience design", duration: "45 menit" },
-        { name: "Jobs in the field of user experience", duration: "40 menit" },
+        {
+          name: `The basics of user experience ${selectedProduct.Tittle}`,
+          duration: "45 menit",
+        },
+        {
+          name: `Jobs in the field of  ${selectedProduct.Tittle}`,
+          duration: "40 menit",
+        },
         { name: "The product development life cycle", duration: "30 menit" },
       ],
     },
     {
-      title: "Introduction Course 2: Learn Fast Data Analyst",
+      title: `Introduction Course 2: Learn Fast ${selectedProduct.Tittle}`,
       lessons: [
-        { name: "Advanced user experience design", duration: "50 menit" },
-        { name: "UX research methods", duration: "35 menit" },
+        {
+          name: `Advanced user experience ${selectedProduct.Tittle}`,
+          duration: "50 menit",
+        },
+        {
+          name: `${selectedProduct.Tittle} research methods`,
+          duration: "35 menit",
+        },
         { name: "Prototyping techniques", duration: "40 menit" },
       ],
     },
     {
-      title: " Introduction Course 3: Intermediate Data Analyst",
+      title: ` Introduction Course 3: Intermediate ${selectedProduct.Tittle}`,
       lessons: [
-        { name: "Data visualization techniques", duration: "60 menit" },
-        { name: "Data modeling basics", duration: "45 menit" },
-        { name: "Introduction to SQL", duration: "40 menit" },
+        { name: ` Techniques ${selectedProduct.Tittle}`, duration: "60 menit" },
+        {
+          name: `Expert user experience ${selectedProduct.Tittle}`,
+          duration: "45 menit",
+        },
+        {
+          name: `Summary  of material ${selectedProduct.Tittle}`,
+          duration: "40 menit",
+        },
       ],
     },
   ];
@@ -138,10 +156,7 @@ const DescCourse = () => {
                       </div>
                     </div>
                     <p className="mt-4 text-gray-700 text-sm">
-                      Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                      Fuga cumque incidunt totam tenetur veritatis obcaecati aut
-                      hic laudantium minima non dolorum ipsam, velit eos quae
-                      officiis exercitationem ipsum odit numquam.
+                      {selectedProduct.descriptionClass}
                     </p>
                   </div>
                 </div>
@@ -154,10 +169,38 @@ const DescCourse = () => {
                 </div>
                 <div className="relative">
                   <h1>
-                    Lorem ipsum dolor, sit amet consectetur adipisicing elit.
-                    Est quisquam animi sed mollitia ducimus, laborum odio
-                    doloribus! Optio laboriosam, delectus, dignissimos et eum
-                    velit ratione reiciendis explicabo dolor dolorem id.
+                    <div className="bg-gray-50 rounded-lg border p-4">
+                      <div className="flex items-center space-x-4">
+                        <img
+                          src={selectedProduct.photoOwner}
+                          alt="Avatar_Instructor"
+                          className="w-12 h-12 rounded-full"
+                        />
+                        <div>
+                          <p className="font-semibold text-gray-900">
+                            {selectedProduct.ownerCourse}
+                          </p>
+                          <p className="text-sm text-gray-600">
+                            {selectedProduct.roleOwner}
+                          </p>
+                        </div>
+                      </div>
+                      <p className="mt-4 text-gray-700 text-sm">
+                        Lorem ipsum dolor, sit amet consectetur adipisicing
+                        elit. Quod aliquid dolorem nobis ab deleniti
+                        exercitationem unde eius modi fugit voluptatem quo,
+                        explicabo, at debitis! Beatae laborum enim quia quod
+                        facere.
+                      </p>
+                      <div className="mt-5 flex items-center">
+                        <div className="text-yellow-500">
+                          {selectedProduct.ratingCourse}
+                        </div>
+                        <span className="text-gray-40 flex underline ml-2">
+                          {selectedProduct.totalRiview}
+                        </span>
+                      </div>
+                    </div>
                   </h1>
                 </div>
               </div>
