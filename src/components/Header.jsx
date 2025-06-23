@@ -28,13 +28,14 @@ const Header = () => {
             className="h-6 md:h-8"
           />
         </Link>
-
         <Navbar
           menuItems={[
-            { label: `Hi, ${currentUser.name}`, to: "/profile" },
+            currentUser
+              ? { label: `Hi, ${currentUser.name}`, to: "/profile" }
+              : { label: "Login", to: "/login" },
             { label: "Admin", to: "/Admin/Dashboard" },
-            { label: "Logout", onClick: handleLogout },
-          ]}
+            currentUser && { label: "Logout", onClick: handleLogout },
+          ].filter(Boolean)} // Filter undefined jika currentUser null
         />
       </div>
     </header>

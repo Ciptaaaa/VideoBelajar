@@ -219,7 +219,7 @@ const Product = () => {
                           Rp. {product.Price}
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                          {product.discount} 
+                          {product.discount}
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
                           {product.discountPrice}

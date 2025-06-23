@@ -43,7 +43,7 @@ const Profile = () => {
       ),
       {
         duration: Infinity,
-        position: "middle-center",
+        position: "top-center", 
       }
     );
   };
