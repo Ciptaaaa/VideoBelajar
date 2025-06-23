@@ -1,17 +1,21 @@
 import React from "react";
-import { Link, useNavigate,  } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import NavbarLogo from "../assets/logo.png";
 import { logoutUser } from "../utils/authUtils";
 import useUserStore from "../services/api/useUserStore";
+import { toast } from "sonner";
 
 const Header = () => {
-  const { currentUser} = useUserStore();
+  const { currentUser } = useUserStore();
   const navigate = useNavigate();
 
-
   const handleLogout = () => {
-    logoutUser(navigate);
+    toast.success("Logout berhasil!");
+    setTimeout(() => {
+      toast.dismiss();
+      logoutUser(navigate);
+    }, 1000);
   };
 
   return (

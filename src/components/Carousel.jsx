@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import { Carousel } from "flowbite-react";
 import useProductStore from "../services/api/useProductStore";
 import { Link } from "react-router-dom";
+import Skeleton from "./skeleton";
 
 const CarouselComponents = () => {
   const { products, fetchProducts } = useProductStore();
@@ -11,7 +12,7 @@ const CarouselComponents = () => {
   }, [fetchProducts]);
 
   if (!products || products.length === 0) {
-    return <div>Loading data...</div>;
+    return <Skeleton type="carousel" />;
   }
 
   return (

@@ -3,6 +3,7 @@ import AdminHeader from "../components/AdminHeader";
 import InputForm from "../Elements/Input/index";
 import Masuk from "../Elements/Button/Masuk";
 import useUserStore from "../services/api/useUserStore";
+import { toast } from "sonner";
 const AddUser = () => {
   const { addUser, users, fetchUsers } = useUserStore();
   const [formData, setFormData] = useState({
@@ -22,14 +23,49 @@ const AddUser = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const result = await addUser(formData); // Tambah user ke API
-    if (result.success) {
-      alert("User berhasil ditambahkan!");
-      fetchUsers();
-      setFormData({ name: "", email: "", phone: "", avatar: "", password: "" });
-    } else {
-      alert("Gagal menambahkan user.");
-    }
+    toast(
+      (t) => (
+        <div>
+          <p className="font-semibold text-center">
+            Apakah anda ingin menambahkan user ini?
+          </p>
+          <div className="mt-3 flex justify-center gap-3">
+            <Masuk
+              onClick={() => toast.dismiss(t)}
+              className="px-4 py-1 text-sm rounded bg-gray-200 hover:bg-gray-300"
+            >
+              Tidak
+            </Masuk>
+            <Masuk
+              onClick={async () => {
+                toast.dismiss(t);
+                const result = await addUser(formData);
+                if (result.success) {
+                  toast.success("User berhasil ditambahkan!");
+                  fetchUsers();
+                  setFormData({
+                    name: "",
+                    email: "",
+                    phone: "",
+                    avatar: "",
+                    password: "",
+                  });
+                } else {
+                  toast.error("Gagal menambahkan user.");
+                }
+              }}
+              className="px-4 py-1 text-sm rounded bg-blue-500 text-white hover:bg-blue-600"
+            >
+              Ya
+            </Masuk>
+          </div>
+        </div>
+      ),
+      {
+        duration: Infinity,
+        position: "top-center",
+      }
+    );
   };
   return (
     <>

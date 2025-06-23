@@ -3,6 +3,7 @@ import AdminHeader from "../components/AdminHeader";
 import InputForm from "../Elements/Input/index";
 import Masuk from "../Elements/Button/Masuk";
 import useProductStore from "../services/api/useProductStore";
+import { toast } from "sonner";
 
 const Product = () => {
   const { products, fetchProducts, addProduct, updateProduct, deleteProduct } =
@@ -66,27 +67,59 @@ const Product = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (isEditing) {
-      updateProduct(formData.id, formData);
-      setIsEditing(false);
-      setEditId(null);
-    } else {
-      addProduct(formData);
-    }
-    setFormData({
-      Tittle: "",
-      descriptionClass: "",
-      Price: "",
-      discountPrice: "",
-      discount: "",
-      ownerCourse: "",
-      roleOwner: "",
-      photoProduct: "",
-      descriptionProduct: "",
-      photoOwner: "",
-      ratingCourse: "★★★★★",
-      totalRiview: "",
-    });
+    const isEdit = isEditing;
+    toast(
+      (t) => (
+        <div>
+          <p className="font-semibold text-center">
+            {" "}
+            apakah anda yakin ingin {isEdit ? "Update" : "Tambahkan"} product?
+          </p>
+          <div className="mt-3 flex justify-center gap-3">
+            <button
+              onClick={() => toast.dismiss(t)}
+              className="px-4 py-1 text-sm rounded bg-gray-200 hover:bg-gray-300"
+            >
+              Tidak
+            </button>
+            <button
+              onClick={() => {
+                toast.dismiss(t);
+                if (isEditing) {
+                  updateProduct(formData.id, formData);
+                  setIsEditing(false);
+                  setEditId(null);
+                } else {
+                  addProduct(formData);
+                }
+                setFormData({
+                  Tittle: "",
+                  descriptionClass: "",
+                  Price: "",
+                  discountPrice: "",
+                  discount: "",
+                  ownerCourse: "",
+                  roleOwner: "",
+                  photoProduct: "",
+                  descriptionProduct: "",
+                  photoOwner: "",
+                  ratingCourse: "★★★★★",
+                  totalRiview: "",
+                });
+                toast.success("Product berhasil disimpan.");
+              }}
+              className="px-4 py-1 text-sm rounded bg-green-500 text-white hover:bg-green-600"
+            >
+              ya
+            </button>
+          </div>
+        </div>
+      ),
+      {
+        duration: Infinity,
+        position: "top-center",
+      }
+    );
   };
 
   return (
@@ -95,7 +128,7 @@ const Product = () => {
       <main className="flex-1 p-6 md:ml-64">
         <div className="mb-6">
           <h1 className="text-2xl font-bold text-gray-900">
-            Create New Product
+            {isEditing ? "Update Product" : "Create a new product"}
           </h1>
         </div>
         <div className="bg-white border-[0.1px] rounded-lg p-6">
@@ -196,11 +229,47 @@ const Product = () => {
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900 flex space-x-2">
                           <Masuk
-                            onClick={() => deleteProduct(product.id)}
+                            onClick={() =>
+                              toast(
+                                (t) => (
+                                  <div>
+                                    <p className="font-semibold text-center">
+                                      Apakah Anda yakin ingin menghapus produk
+                                      ini?
+                                    </p>
+                                    <div className="mt-3 flex justify-center gap-3">
+                                      <button
+                                        onClick={() => toast.dismiss(t)}
+                                        className="px-4 py-1 text-sm rounded bg-gray-200 hover:bg-gray-300"
+                                      >
+                                        Tidak
+                                      </button>
+                                      <button
+                                        onClick={() => {
+                                          deleteProduct(product.id);
+                                          toast.dismiss(t);
+                                          toast.success(
+                                            "Produk berhasil dihapus."
+                                          );
+                                        }}
+                                        className="px-4 py-1 text-sm rounded bg-red-500 text-white hover:bg-red-600"
+                                      >
+                                        Ya
+                                      </button>
+                                    </div>
+                                  </div>
+                                ),
+                                {
+                                  duration: Infinity,
+                                  position: "top-center",
+                                }
+                              )
+                            }
                             className="text-white bg-red-500 hover:bg-red-600 rounded-lg"
                           >
                             Delete
                           </Masuk>
+
                           <Masuk
                             onClick={() => handleEdit(product)}
                             className="text-white bg-yellow-300 hover:bg-yellow-500 rounded-lg"

@@ -4,6 +4,7 @@ import AdminHeader from "../components/AdminHeader";
 import axios from "axios";
 import { logoutUser } from "../utils/authUtils";
 import { useNavigate } from "react-router-dom";
+import { toast } from "sonner";
 const Admin = () => {
   const [users, setUsers] = useState([]);
   const [products, setProducts] = useState([]);
@@ -33,7 +34,11 @@ const Admin = () => {
   }, []);
   const navigate = useNavigate();
   const handleLogout = () => {
-    logoutUser(navigate);
+    toast.success("Logout berhasil!");
+    setTimeout(() => {
+      toast.dismiss();
+      logoutUser(navigate);
+    }, 1000);
   };
   return (
     <div className="flex flex-col md:flex-row h-screen">
