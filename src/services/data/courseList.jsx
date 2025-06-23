@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import CourseCard from "./courseCard";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchProducts } from "../../redux/actions/slice";
-import Skeleton from "../../components/skeleton";
+import Skeleton from "../../components/Skeleton";
 const CourseList = () => {
   const dispatch = useDispatch();
   const products = useSelector((state) => state.products.items);
