@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { Carousel } from "flowbite-react";
 import useProductStore from "../services/api/useProductStore";
 import { Link } from "react-router-dom";
-import Skeleton from "./skeleton";
+import Skeleton from "./Skeleton";
 
 const CarouselComponents = () => {
   const { products, fetchProducts } = useProductStore();
