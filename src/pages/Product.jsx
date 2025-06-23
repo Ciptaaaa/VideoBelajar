@@ -219,7 +219,7 @@ const Product = () => {
                           Rp. {product.Price}
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                          {product.discount}
+                          {product.discount} 
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
                           {product.discountPrice}
@@ -269,7 +269,6 @@ const Product = () => {
                           >
                             Delete
                           </Masuk>
-
                           <Masuk
                             onClick={() => handleEdit(product)}
                             className="text-white bg-yellow-300 hover:bg-yellow-500 rounded-lg"

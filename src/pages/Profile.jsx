@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { toast } from "sonner";
+import Header from "../components/Header";
 import Footer from "../components/Footer";
 import InputForm from "../Elements/Input";
 import Masuk from "../Elements/Button/Masuk";
 import useUserStore from "../services/api/useUserStore";
-import { toast } from "sonner";
-import Header from "../components/Header";
 
 const Profile = () => {
   const navigate = useNavigate();
@@ -72,7 +72,6 @@ const Profile = () => {
   };
   const handleSubmit = (e) => {
     e.preventDefault();
-
     toast(
       (t) => (
         <div>
@@ -96,14 +95,12 @@ const Profile = () => {
                 } else {
                   updateUser(formData);
                 }
-
                 setFormData({
                   name: "",
                   email: "",
                   phone: "",
                   password: "",
                 });
-
                 toast.success("Perubahan berhasil disimpan!");
               }}
               className="px-4 py-1 text-sm rounded bg-blue-500 text-white hover:bg-blue-600"
@@ -119,7 +116,6 @@ const Profile = () => {
       }
     );
   };
-
   return (
     <>
       <Header />

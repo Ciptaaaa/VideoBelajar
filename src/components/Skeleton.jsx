@@ -18,17 +18,10 @@ const Skeleton = ({ type = "course" }) => {
   // Type: Course
   return (
     <div className="p-4 border rounded-lg shadow animate-pulse space-y-4">
-      {/* Gambar Produk */}
       <div className="h-40 bg-gray-300 rounded-md w-full"></div>
-
-      {/* Judul */}
       <div className="h-4 bg-gray-300 rounded w-3/4"></div>
-
-      {/* Deskripsi */}
       <div className="h-3 bg-gray-300 rounded w-full"></div>
       <div className="h-3 bg-gray-300 rounded w-5/6"></div>
-
-      {/* Avatar dan Info Owner */}
       <div className="flex items-center gap-4 mt-4">
         <div className="w-10 h-10 bg-gray-400 rounded-full"></div>
         <div className="flex-1">
