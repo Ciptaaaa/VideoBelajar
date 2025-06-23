@@ -5,6 +5,7 @@ import Masuk from "../Elements/Button/Masuk";
 import Flag from "../assets/flag_indo.svg";
 import Google from "../Elements/Button/Google";
 import axios from "axios";
+import { toast } from "sonner";
 const API_URL = import.meta.env.VITE_API_URL;
 
 const formDaftar = () => {
@@ -31,7 +32,7 @@ const formDaftar = () => {
     e.preventDefault();
 
     if (input.password !== input.confirmPassword) {
-      alert("Passwords do not match!");
+      toast.error("Passwords do not match!");
       return;
     }
     if (isSubmitting) return; // cegah klik ganda
@@ -47,8 +48,11 @@ const formDaftar = () => {
       });
 
       if (response.status === 201 || response.status === 200) {
-        alert("Pendaftaran berhasil! Silakan login.");
-        navigate("/login");
+        toast.success("Pendaftaran berhasil! Silakan login.");
+        setTimeout(() => {
+          toast.dismiss();
+          navigate("/login");
+        }, 1000);
       }
     } catch (error) {
       console.error("Error saat daftar:", error);

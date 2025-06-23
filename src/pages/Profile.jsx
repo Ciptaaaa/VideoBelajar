@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import NavbarLogo from "../assets/logo.png";
-import Navbar from "../components/Navbar";
+import { toast } from "sonner";
+import Header from "../components/Header";
 import Footer from "../components/Footer";
 import InputForm from "../Elements/Input";
 import Masuk from "../Elements/Button/Masuk";
@@ -14,13 +14,38 @@ const Profile = () => {
   const [editIsId, setEditIsId] = useState(null);
 
   const handleDelete = async () => {
-    const confirmDelete = window.confirm(
-      "Are you sure you want to delete your account?"
+    toast(
+      (t) => (
+        <div>
+          <p className="font-semibold">
+            Apakah Anda yakin ingin menghapus akun?
+          </p>
+          <div className="mt-3 flex justify-end gap-2">
+            <button
+              onClick={() => toast.dismiss(t)}
+              className="px-3 py-1 text-sm rounded bg-gray-200 hover:bg-gray-300"
+            >
+              Tidak
+            </button>
+            <button
+              onClick={async () => {
+                toast.dismiss(t);
+                await deleteUser(currentUser.id);
+                toast.success("Akun berhasil dihapus.");
+                navigate("/login");
+              }}
+              className="px-3 py-1 text-sm rounded bg-red-500 text-white hover:bg-red-600"
+            >
+              Ya
+            </button>
+          </div>
+        </div>
+      ),
+      {
+        duration: Infinity,
+        position: "top-center", 
+      }
     );
-    if (confirmDelete) {
-      await deleteUser(currentUser.id);
-      navigate("/login");
-    }
   };
 
   const [formData, setFormData] = useState({
@@ -47,42 +72,53 @@ const Profile = () => {
   };
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (isEdit) {
-      updateUser({ ...formData, id: editIsId });
-      setIsEdit(false);
-      setEditIsId(null);
-    } else {
-      updateUser(formData);
-    }
-    setFormData({
-      name: "",
-      email: "",
-      phone: "",
-      password: "",
-    });
+    toast(
+      (t) => (
+        <div>
+          <p className="font-semibold text-center">
+            Apakah Anda yakin ingin menyimpan perubahan?
+          </p>
+          <div className="mt-3 flex justify-center gap-3">
+            <button
+              onClick={() => toast.dismiss(t)}
+              className="px-4 py-1 text-sm rounded bg-gray-200 hover:bg-gray-300"
+            >
+              Tidak
+            </button>
+            <button
+              onClick={() => {
+                toast.dismiss(t);
+                if (isEdit) {
+                  updateUser({ ...formData, id: editIsId });
+                  setIsEdit(false);
+                  setEditIsId(null);
+                } else {
+                  updateUser(formData);
+                }
+                setFormData({
+                  name: "",
+                  email: "",
+                  phone: "",
+                  password: "",
+                });
+                toast.success("Perubahan berhasil disimpan!");
+              }}
+              className="px-4 py-1 text-sm rounded bg-blue-500 text-white hover:bg-blue-600"
+            >
+              Ya
+            </button>
+          </div>
+        </div>
+      ),
+      {
+        duration: Infinity,
+        position: "top-center",
+      }
+    );
   };
   return (
     <>
-      <header className="bg-white shadow-sm">
-        <div className="container mx-auto max-w-[1200px] px-4 md:px-6 lg:px-10 py-4 flex justify-between items-center">
-          <Link to="/user" className="block">
-            <img
-              src={NavbarLogo}
-              alt="Logo Video Belajar"
-              className="h-6 md:h-8"
-            />
-          </Link>
-          {currentUser && (
-            <Navbar
-              menuItems={[
-                { label: `Hi, ${currentUser.name}`, to: "/profile" },
-                { label: "Admin", to: "/Admin/Dashboard" },
-                { label: "Logout" },
-              ]}
-            />
-          )}
-        </div>
-      </header>
+      <Header />
       <div className="max-w-4xl mx-auto p-4">
         <h2 className="text-2xl font-bold mb-4">User Dashboard</h2>
         <div className="flex border-b mb-4">
@@ -139,7 +175,10 @@ const Profile = () => {
               </div>
 
               <div className="flex items-center justify-between">
-                <Masuk type="submit" className="bg-blue-500 hover:bg-blue-700 text-white">
+                <Masuk
+                  type="submit"
+                  className="bg-blue-500 hover:bg-blue-700 text-white"
+                >
                   Save Changes
                 </Masuk>
                 <Masuk

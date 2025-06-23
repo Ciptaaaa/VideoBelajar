@@ -6,7 +6,7 @@ import Google from "../Elements/Button/Google";
 import Daftar from "../Elements/Button/Daftar";
 import useUserStore from "../services/api/useUserStore";
 import axios from "axios";
-
+import { toast } from "sonner";
 const API_URL = import.meta.env.VITE_API_URL;
 
 const formLogin = () => {
@@ -38,13 +38,17 @@ const formLogin = () => {
         localStorage.setItem("user", JSON.stringify(safeUserData));
         setCurrentUser(user); // set ke zustand
         localStorage.setItem("loggedin", "true");
-        navigate("/user");
+        toast.success("Login berhasil!");
+        setTimeout(() => {
+          toast.dismiss();
+          navigate("/user");
+        }, 1000);
       } else {
-        alert("Email atau password salah.");
+        toast.error("Email atau password salah.");
       }
     } catch (error) {
       console.error("Login error:", error);
-      alert("Terjadi kesalahan saat login.");
+      toast.info("Terjadi kesalahan saat login.");
     }
   };
 

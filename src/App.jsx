@@ -12,64 +12,68 @@ import Product from "./pages/Product";
 import AddUser from "./pages/AddUser";
 import NotFoundPages from "./pages/NotFoundPages";
 import ProtectedRoute from "./utils/ProtectedRoute";
+import { Toaster } from "sonner";
 
 const App = () => {
   return (
-    <Routes>
-      <Route path="/" element={<HomePage />} />
-      <Route path="/login" element={<Login />} />
-      <Route path="/forgot-Password" element={<ForgotPassword />} />
-      <Route path="/Register" element={<Register />} />
-      <Route
-        path="/user"
-        element={
-          <ProtectedRoute>
-            <User />
-          </ProtectedRoute>
-        }
-      />
-      <Route
-        path="/profile"
-        element={
-          <ProtectedRoute>
-            <Profile />
-          </ProtectedRoute>
-        }
-      />
-      <Route
-        path="/DescCourse/:id"
-        element={
-          <ProtectedRoute>
-            <DescCourse />
-          </ProtectedRoute>
-        }
-      />
-      <Route
-        path="/Admin/Dashboard"
-        element={
-          <ProtectedRoute>
-            <Admin />
-          </ProtectedRoute>
-        }
-      />
-      <Route
-        path="/Admin/Product"
-        element={
-          <ProtectedRoute>
-            <Product />
-          </ProtectedRoute>
-        }
-      />
-      <Route
-        path="/Admin/AddUser"
-        element={
-          <ProtectedRoute>
-            <AddUser />
-          </ProtectedRoute>
-        }
-      />
-      <Route path="*" element={<NotFoundPages />} />
-    </Routes>
+    <>
+      <Toaster richColors position="top-right" />
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/forgot-Password" element={<ForgotPassword />} />
+        <Route path="/Register" element={<Register />} />
+        <Route
+          path="/user"
+          element={
+            <ProtectedRoute>
+              <User />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/profile"
+          element={
+            <ProtectedRoute>
+              <Profile />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/DescCourse/:id"
+          element={
+            <ProtectedRoute>
+              <DescCourse />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/Admin/Dashboard"
+          element={
+            <ProtectedRoute>
+              <Admin />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/Admin/Product"
+          element={
+            <ProtectedRoute>
+              <Product />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/Admin/AddUser"
+          element={
+            <ProtectedRoute>
+              <AddUser />
+            </ProtectedRoute>
+          }
+        />
+        <Route path="*" element={<NotFoundPages />} />
+      </Routes>
+    </>
   );
 };
 
